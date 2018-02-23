@@ -4,9 +4,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../../environments/environment';
 
+import * as _ from 'lodash';
+
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-
     // constructor(private auth: AuthService) {}
     // const authHeader = this.auth.getAuthorizationHeader();
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -17,9 +18,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 'Cache-Control': 'no-cache',
                 'Content-Type': 'application/json'
             },
-             url: environment.APIUrl + req.url
+             url: _.replace(req.url, 'http://localhost:4200', environment.APIUrl)
         });
         return next.handle(cloneReq);
     }
 }
-
