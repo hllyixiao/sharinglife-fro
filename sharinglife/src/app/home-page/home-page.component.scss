@@ -1,0 +1,57 @@
+.navbar.navbar-fixed-top {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+}
+
+.navbar-default {
+    background-color: #fff;
+    border-color: #f0f0f0;
+}
+
+nav {
+	@mixin log-nav-btn {
+	    float: right;
+	    height: 40px;
+	    font-size: 15px;
+	    line-height: 24px;
+	    border-radius: 20px;
+	    margin: 9px 5px 0 15px;
+	};
+	padding: 0;
+	.nav-limit {
+		min-width: 768px;
+	    max-width: 1440px;
+	    margin: 0 auto;
+	}
+	.logo {
+		float: left;
+		height: 56px;
+		padding: 0;
+		img {
+			height: 56px;
+		}
+	}
+	.log-in {
+		@include log-nav-btn;
+		color: #969696;
+		&:hover {
+			color: red;
+		}
+	}
+	.sign-up {
+		@include log-nav-btn;
+	    width: 80px;
+	    color: #ea6f5a;
+	    border: 1px solid rgba(236,97,73,.7);
+	    background-color: transparent;
+	    &:hover {
+	    	background-color: #f55b5b21;
+	    };
+	}
+	.write-btn {
+		@include log-nav-btn;
+	    width: 100px;
+	    color: #fff;
+	    background-color: #ea6f5a;
+	}
+}

@@ -1,0 +1,32 @@
+<div class="register">
+	<div class="registerContainer">
+		<div class="registerContent">
+			<div class="registerFlowHeader">
+				<h1 class="title">分享生活</h1>
+				<span class="slogen">注册分享, 源于生活</span>
+			</div>
+			<div class="registerFlowBody">
+				<form [formGroup]="registerInfo" novalidate #registerform>
+			      <div [ngClass]="{'hidden': !validPhoneNo, 'show': validPhoneNo}" class="form-group">
+			        <input type="number" class="form-control" id="phoneNo" formControlName="phoneNo" placeholder="手机号" (blur)="blurEvent('phoneNo')">
+			      </div>
+			      <div *ngIf="!validPhoneNo" class="form-group">
+			        <input type="text" class="form-control error" value="输入手机号" (focus)="focusEvent('phoneNo')">
+			      </div>
+			    
+			      <div [ngClass]="{'hidden': !validDigits, 'show': validDigits}" class="form-group">
+			        <input type="number" class="form-control" id="digits" formControlName="digits" placeholder="输入验证码" (blur)="blurEvent($event, 'digits')">
+			      </div>
+			      <div *ngIf="!validDigits" class="form-group">
+			      	<input type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('digits')">
+			      </div>
+			      
+			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientRegister()">注册</button>
+			    </form>
+			</div>
+			<div class="registerFlowFoot">
+				已有帐号？ <span>登录</span>
+			</div>
+		</div>
+	</div>
+</div>

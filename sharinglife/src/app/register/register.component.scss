@@ -1,0 +1,103 @@
+.register {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    padding-right: 15px;
+    background-size: cover;
+    background-color: #b8e5f8;
+    background-repeat: no-repeat;
+	background-image: url('/assets/img/register-background.png')
+}
+
+.registerContainer {
+	-webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border-radius: 2px;
+    min-height: 688px;
+    height: calc(100% - 42px);
+}
+
+.registerContent {
+	width: 430px;
+	margin: 0 auto;
+	text-align: center;
+	background: #fff;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
+}
+
+.registerFlowHeader {
+	padding-top: 30px;
+	padding-bottom: 5px;
+	.title {
+		font-size: 30px;
+	    font-weight: 800;
+	    color: #0084ff;
+	}
+	.slogen {
+		margin-top: 15px;
+	    color: #0084ff;
+	    font-size: 22px;
+	}
+}
+
+.registerFlowBody {
+	padding: 0 40px 36px;
+	margin-top: 30px;
+    font-size: 14px;
+}
+
+.registerFlowFoot {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #f6f6f6;
+    height: 58px;
+    border-top: 1px solid #ebebeb;
+    font-size: 16px;
+
+    span {
+	    color: #175199;
+	    cursor: pointer;
+	}
+}
+
+
+@mixin tipcss {
+    border: 0px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    box-shadow: inset 0 0px 0px;
+    -webkit-box-shadow:inset 0 0px 0px;
+}
+
+input.form-control {
+    @include tipcss
+}
+
+form .error {
+    color: red;
+}
+    
