@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Register } from '../../_models/register';
+
 @Injectable()
 export class RegisterService {
 
