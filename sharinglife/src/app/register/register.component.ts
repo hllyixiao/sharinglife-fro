@@ -71,15 +71,15 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clientRegister() {
-  	if(!this.registerInfoHasError()) return;
+  	if(this.registerInfoHasError()) return;
   	this.registerService.clientRegister(this.registerInfo.value);
   }
  
- // 注册信息填写是否通过
+  // 验证注册信息填写是否正确
   registerInfoHasError(): Boolean {
   	const phoneNoErrors = this.registerInfo.get("phoneNo").errors;
   	const digitsErrors = this.registerInfo.get("digits").errors;
-  	return !phoneNoErrors && !digitsErrors;
+  	return !!phoneNoErrors || !!digitsErrors;
   }
 
   ngAfterViewInit() {
