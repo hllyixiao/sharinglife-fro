@@ -11,6 +11,6 @@ export class RegisterService {
   *	@ param register注册用户信息
   */
   clientRegister(register: Register) {
-    return this.http.post('/api/developers/add', register).subscribe();
+    return this.http.post('api/developers/add', register).subscribe();
   }
 }
