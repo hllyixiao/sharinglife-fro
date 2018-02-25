@@ -1,4 +1,6 @@
 export class Register {
-	phoneNo: string;
-	digits: number;
+    name: string;
+    phone: string;
+    password: string;
+    // digits: number;
 }
