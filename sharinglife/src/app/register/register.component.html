@@ -7,39 +7,41 @@
 			</div>
 			<div class="registerFlowBody">
 				<form [formGroup]="registerInfo" novalidate #registerform>
-			      <div [ngClass]="{'hidden': !check.name, 'show': check.name}" class="form-group">
+			      <div [ngClass]="{'hidden': !check.name, 'show': check.name}" class="form-group registrInput">
 			        <input type="text" class="form-control" id="name" formControlName="name" placeholder="姓名" (blur)="blurEvent('name')">
-			      </div>
+			        <div [ngClass]="{'hidden': !prompt.name, 'show': prompt.name}" class="registerHasError"><span>已注册</span></div>
+            </div>
 			      <div *ngIf="!check.name" class="form-group">
 			        <input type="text" class="form-control error" value="输入姓名" (focus)="focusEvent('name')">
 						</div>
-						
-						<div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group">
+
+						<div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group registrInput">
 			        <input type="tel" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')">
+               <div [ngClass]="{'hidden': !prompt.phone, 'show': prompt.phone}" class="registerHasError"><span>已注册</span></div>
 			      </div>
 			      <div *ngIf="!check.phone" class="form-group">
 			        <input type="tel" class="form-control error" value="输入手机号" (focus)="focusEvent('phone')">
 						</div>
-						
-						<div [ngClass]="{'hidden': !check.password, 'show': check.password}" class="form-group">
+
+						<div [ngClass]="{'hidden': !check.password, 'show': check.password}" class="form-group registrInput">
 			        <input type="password" class="form-control" id="password" formControlName="password" placeholder="密码" (blur)="blurEvent('password')">
 			      </div>
 			      <div *ngIf="!check.password" class="form-group">
 			        <input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
 			      </div>
-			    
+
 			      <!--<div [ngClass]="{'hidden': !validDigits, 'show': validDigits}" class="form-group">
 			        <input type="number" class="form-control" id="digits" formControlName="digits" placeholder="输入验证码" (blur)="blurEvent($event, 'digits')">
 			      </div>
 			      <div *ngIf="!validDigits" class="form-group">
 			      	<input type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('digits')">
 			      </div>-->
-			      
+
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientRegister()">注册</button>
 			    </form>
 			</div>
 			<div class="registerFlowFoot">
-				已有帐号？ <span routerLink="/login">登录</span>
+				已有帐号？ <span routerLink="/login" routerLinkActive="active">登录</span>
 			</div>
 		</div>
 	</div>

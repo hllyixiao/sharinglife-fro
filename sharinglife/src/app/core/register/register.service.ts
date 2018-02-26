@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
 
 import { Register } from '../../_models/register';
 
@@ -10,7 +11,7 @@ export class RegisterService {
   /**
   *	@ param register注册用户信息
   */
-  clientRegister(register: Register) {
+  clientRegister(register: Register): Observable<any> {
     return this.http.post('sl/api/lr/register', register);
   }
 }

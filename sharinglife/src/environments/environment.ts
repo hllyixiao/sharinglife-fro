@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiProxyUrl: 'http://172.4.88.129:8031/'
+  apiProxyUrl: ''
 };

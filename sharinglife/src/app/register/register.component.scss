@@ -84,6 +84,44 @@
 	}
 }
 
+.registrInput {
+  position: relative;
+}
+
+.registerHasError {
+    position: absolute;
+    top: -1px;
+    font-size: 14px;
+    color: #f1403c;
+    text-align: right;
+    cursor: text;
+    background: #fff;
+    opacity: 1;
+    box-sizing: border-box;
+    transition: opacity .35s ease;
+  &:before {
+    position: absolute;
+    left: 270px;
+    width: 30px;
+    height: 34px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff);
+    content: "";
+  };
+  span {
+    position: absolute;
+    height: 34px;
+    left: 300px;
+    line-height: 34px;
+    text-align: left;
+    width: 50px;
+    color: red;
+    background: #fff;
+    opacity: 1;
+    box-sizing: border-box;
+    transition: opacity .35s ease;
+  }
+}
+
 
 @mixin tipcss {
     border: 0px solid #ccc;
@@ -100,4 +138,4 @@ input.form-control {
 form .error {
     color: red;
 }
-    
+

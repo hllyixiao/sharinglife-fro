@@ -7,20 +7,20 @@
 			</div>
 			<div class="loginFlowBody">
 				<form [formGroup]="loginInfo" novalidate #loginform>
-			      <div [ngClass]="{'hidden': !validPhoneNo, 'show': validPhoneNo}" class="form-group">
-			        <input type="number" class="form-control" id="phoneNo" formControlName="phoneNo" placeholder="手机号" (blur)="blurEvent('phoneNo')">
+			      <div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group">
+			        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')">
 			      </div>
-			      <div *ngIf="!validPhoneNo" class="form-group">
-			        <input type="text" class="form-control error" value="输入手机号" (focus)="focusEvent('phoneNo')">
+			      <div *ngIf="!check.phone" class="form-group">
+			        <input type="text" class="form-control error" value="输入手机号" (focus)="focusEvent('phone')">
 			      </div>
-			    
-			      <div [ngClass]="{'hidden': !validDigits, 'show': validDigits}" class="form-group">
-			        <input type="number" class="form-control" id="digits" formControlName="digits" placeholder="输入密码" (blur)="blurEvent($event, 'digits')">
+
+			      <div [ngClass]="{'hidden': !check.password, 'show': check.password}" class="form-group">
+			        <input type="password" class="form-control" id="password" formControlName="password" placeholder="输入密码" (blur)="blurEvent('password')">
 			      </div>
-			      <div *ngIf="!validDigits" class="form-group">
-			      	<input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('digits')">
+			      <div *ngIf="!check.password" class="form-group">
+			      	<input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
 			      </div>
-			      
+
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientLogin()">登录</button>
 			    </form>
 			</div>

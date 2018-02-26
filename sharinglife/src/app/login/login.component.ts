@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LoginService } from '../core/login/login.service';
 
@@ -11,14 +12,21 @@ import { LoginService } from '../core/login/login.service';
 export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public loginInfo: FormGroup;
-  public validPhoneNo = true;
-  public validDigits = true;
-  private phoneTimer;
-  private digitsTimer;
+  private Timer = {
+    phone: null,
+    password: null
+  };
+  public check = {
+    phone: true,
+    password: true
+  };
 
   @ViewChild('loginform') loginform;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) { }
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -26,60 +34,44 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createForm() {
     this.loginInfo = this.fb.group({
-            phoneNo: ['', Validators.required ],
-            digits: ['', Validators.required ]
+            phone: ['', Validators.required ],
+            password: ['', Validators.required ]
         });
   }
 
-  blurEvent(str) {
-    const cphoneNo = this.loginInfo.get('phoneNo');
-    const cdigits = this.loginInfo.get('digits');
-    if (str === 'phoneNo') {
-        if (cphoneNo.errors && !!cphoneNo.errors.required) {
-            this.validPhoneNo = false;
-        }
-    } else {
-        if (cdigits.errors && !!cdigits.errors.required) {
-            this.validDigits = false;
-        }
+  // 字段失去焦点
+  blurEvent(strId) {
+    const formCtl = this.loginInfo.get(strId);
+    if (formCtl.errors && formCtl.errors.required) {
+        this.check[strId] = false;
     }
   }
 
-  focusEvent(str) {
-    const cphoneNo = this.loginInfo.get('phoneNo');
-    const cdigits = this.loginInfo.get('digits');
-    if (str === 'phoneNo') {
-        this.validPhoneNo = true;
-        this.phoneTimer = setTimeout(() => {
-            this.setFocus(str);
-        }, 50);
-    } else {
-        this.validDigits = true;
-        this.phoneTimer = setTimeout(() => {
-            this.setFocus(str);
-        }, 50);
-    }
+  // 字段获取焦点
+  focusEvent(strId) {
+    this.check[strId] = true;
+    this.Timer[strId] = setTimeout(() => {
+      this.setFocus(strId);
+    }, 50);
   }
 
-  setFocus(focusFlag): void {
-    if (focusFlag === 'phoneNo') {
-       this.loginform.nativeElement.querySelector('#phoneNo').focus();
-    }else {
-       this.loginform.nativeElement.querySelector('#digits').focus();
-    }
+  setFocus(strId): void {
+    this.loginform.nativeElement.querySelector('#' + strId).focus();
   }
 
   clientLogin() {
     if (!this.loginInfoHasError()) {
-       this.loginService.clientLogin(this.loginInfo.value).subscribe();
+       this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
+          this.router.navigate(['/home']);
+       });
     }
   }
 
   // 验证注册信息填写是否正确
   loginInfoHasError(): Boolean {
-    const phoneNoErrors = this.loginInfo.get('phoneNo').errors;
-    const digitsErrors = this.loginInfo.get('digits').errors;
-    return !!phoneNoErrors || !!digitsErrors;
+    const phoneNoErrors = !!this.loginInfo.get('phone').errors;
+    const digitsErrors = !!this.loginInfo.get('password').errors;
+    return phoneNoErrors || digitsErrors;
   }
 
   ngAfterViewInit() {
@@ -87,8 +79,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.phoneTimer) { clearTimeout(this.phoneTimer); }
-    if (this.digitsTimer) { clearTimeout(this.digitsTimer); }
+    if (this.Timer['phone']) { clearTimeout(this.Timer['phone']); }
+    if (this.Timer['password']) { clearTimeout(this.Timer['password']); }
   }
 
 }

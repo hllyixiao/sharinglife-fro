@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { RegisterService } from '../core/register/register.service';
 
@@ -16,6 +17,10 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     phone: null,
     password: null
   };
+  private prompt = {
+    name: false,
+    phone: false
+  };
   public check = {
     name: true,
     phone: true,
@@ -24,7 +29,11 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('registerform') registerform;
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService) { }
+  constructor(
+    private fb: FormBuilder,
+    private registerService: RegisterService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.createForm();
@@ -49,7 +58,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // 字段获取焦点
   focusEvent(strId) {
-    const formCtl = this.registerInfo.get(strId);
     this.check[strId] = true;
     this.Timer[strId] = setTimeout(() => {
       this.setFocus(strId);
@@ -57,14 +65,21 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setFocus(strId): void {
+    if (this.prompt[strId]) { this.prompt[strId] = false };
     this.registerform.nativeElement.querySelector('#' + strId).focus();
   }
 
   clientRegister() {
     if (!this.registerInfoHasError()) {
-       this.registerService.clientRegister(this.registerInfo.value).subscribe(res => {
-          console.log('register success');
-       });
+       this.registerService.clientRegister(this.registerInfo.value).subscribe(data => {
+          this.prompt.name = data.name && data.name.exist;
+          this.prompt.phone = data.phone && data.phone.exist;
+          if (!this.prompt.name && !this.prompt.phone) {
+            this.router.navigate(['/login']);
+          }
+       },
+       error => { }
+       );
     }
   }
 

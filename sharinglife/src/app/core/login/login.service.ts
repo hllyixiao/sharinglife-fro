@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable} from 'rxjs/Rx'
 
 @Injectable()
 export class LoginService {
@@ -8,7 +9,7 @@ export class LoginService {
   /**
   *	@ param clientLogin用户登陆
   */
-  clientLogin(login) {
+  clientLogin(login): Observable<any> {
     return this.http.post('api/client/login', login);
   }
 }
