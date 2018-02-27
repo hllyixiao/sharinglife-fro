@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module'
 import { CoreModule } from './core/core.module';
 import { RoutingModule } from './routing/routing.module';
 // component
@@ -17,6 +18,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   imports: [
+    AppBootstrapModule,
     BrowserModule,
     CoreModule,
     FormsModule,

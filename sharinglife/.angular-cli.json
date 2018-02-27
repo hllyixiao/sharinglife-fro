@@ -18,10 +18,11 @@
     "testTsconfig": "tsconfig.spec.json",
     "prefix": "app",
     "styles": [
-      "styles.scss",
+
       "assets/iconfont/iconfont.css",
       "../node_modules/bootstrap/dist/css/bootstrap.css",
-      "../node_modules/font-awesome/css/font-awesome.css"
+      "../node_modules/font-awesome/css/font-awesome.css",
+      "styles.scss"
     ],
     "scripts": [
       "../node_modules/jquery/dist/jquery.min.js",

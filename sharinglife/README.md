@@ -39,8 +39,31 @@ ng generate pipe my-pipe - 生成一个新管道
 ng generate directive my-directive - 生成一个新指令
 
 ## 引入第三方 bootstrap
-
 1.npm install bootstrap --save  2.npm install @types/bootstrap --save-dev 注意：使用cnpm安装 真实的路径是：../node_modules/_bootstrap@3.3.7@bootstrap/dist/css/bootstrap.css
 angular-cli.json文件:
 "styles": [ "../node_modules/bootstrap/dist/css/bootstrap.css"],
 "scripts": [ "../node_modules/bootstrap/dist/js/bootstrap.min.js"],
+
+## 引入第三方 bootstrap3 插件js  参考 https://valor-software.com/ngx-bootstrap/#/
+1.npm i ngx-bootstrap --save
+2.app.module.ts
+    import { TooltipModule } from 'ngx-bootstrap/tooltip';
+    @NgModule({
+      imports: [
+        ...
+        TooltipModule.forRoot(), //bootstrap3 单独用 单独引用
+        ...
+      ],
+      declarations: []
+    })
+
+## 引入第三方 bootstrap4 插件js
+1.npm i @ng-bootstrap/ng-bootstrap --save
+2.app.module.ts
+    import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+    @NgModule({
+      imports: [
+        NgbModule.forRoot(), // bootstrap4 一次引用就行
+      ],
+      declarations: []
+    })
