@@ -2,11 +2,14 @@
 	<div class="loginContainer">
 		<div class="loginContent">
 			<div class="loginFlowHeader">
-				<h1 class="title">分享生活</h1>
+				<h1 class="title">分享 · 生活</h1>
 				<span class="slogen">登录分享, 源于生活</span>
 			</div>
 			<div class="loginFlowBody">
 				<form [formGroup]="loginInfo" novalidate #loginform>
+						<div *ngIf="!loginState" class="form-group">
+								<span class="error">{{ loginErrorMsg }}</span>
+							</div>
 			      <div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group">
 			        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')">
 			      </div>
@@ -19,7 +22,7 @@
 			      </div>
 			      <div *ngIf="!check.password" class="form-group">
 			      	<input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
-			      </div>
+						</div>
 
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientLogin()">登录</button>
 			    </form>

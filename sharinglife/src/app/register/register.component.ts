@@ -54,6 +54,20 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     if (formCtl.errors && formCtl.errors.required) {
         this.check[strId] = false;
     }
+    if (strId === 'name' && !this.registerInfo.get('name').errors) {
+      this.registerService.isExistname(this.registerInfo.get(strId).value).subscribe(isExist => {
+        this.prompt.name = isExist;
+      },
+      error => { }
+      );
+    }
+    if (strId === 'phone' && !this.registerInfo.get('name').errors) {
+      this.registerService.isExistpho(this.registerInfo.get(strId).value).subscribe(isExist => {
+        this.prompt.phone = isExist;
+      },
+      error => { }
+      );
+    }
   }
 
   // 字段获取焦点
@@ -65,15 +79,13 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setFocus(strId): void {
-    if (this.prompt[strId]) { this.prompt[strId] = false };
+    if (this.prompt[strId]) { this.prompt[strId] = false;}
     this.registerform.nativeElement.querySelector('#' + strId).focus();
   }
 
   clientRegister() {
     if (!this.registerInfoHasError()) {
        this.registerService.clientRegister(this.registerInfo.value).subscribe(data => {
-          this.prompt.name = data.name && data.name.exist;
-          this.prompt.phone = data.phone && data.phone.exist;
           if (!this.prompt.name && !this.prompt.phone) {
             this.router.navigate(['/login']);
           }

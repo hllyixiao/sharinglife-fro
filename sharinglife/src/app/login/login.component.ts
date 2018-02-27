@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     phone: true,
     password: true
   };
+  public loginState = true;
+  public loginErrorMsg = '';
 
   @ViewChild('loginform') loginform;
 
@@ -62,7 +64,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   clientLogin() {
     if (!this.loginInfoHasError()) {
        this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
-          this.router.navigate(['/home']);
+          if (resp.code === 1) {
+            this.loginState = true;
+            this.router.navigate(['/home']);
+          } else {
+            this.loginState = false;
+            this.loginErrorMsg = resp.msg;
+          }
        });
     }
   }

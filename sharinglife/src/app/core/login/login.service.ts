@@ -10,6 +10,6 @@ export class LoginService {
   *	@ param clientLogin用户登陆
   */
   clientLogin(login): Observable<any> {
-    return this.http.post('api/client/login', login);
+    return this.http.post('sl/api/lr/login', login);
   }
 }
