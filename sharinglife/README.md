@@ -26,6 +26,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## 样式参考：http://www.zuidaima.com/share/3704554819898368.htm
+
+## git 命令
+git clone /git pull / git status/git add . /git commit -m"xxx" //git push
+
 ## 使用scss
 1.新建项目: ng new my-project --style=sass
 2.现有项目: ng set defaults.styleExt scss   并将.css后缀改为 .scss

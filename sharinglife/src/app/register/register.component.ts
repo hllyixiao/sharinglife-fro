@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setFocus(strId): void {
-    if (this.prompt[strId]) { this.prompt[strId] = false;}
+    if (this.prompt[strId]) { this.prompt[strId] = false; }
     this.registerform.nativeElement.querySelector('#' + strId).focus();
   }
 
@@ -100,8 +100,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     const nameErrors = !!this.registerInfo.get('name').errors;
     const phoneErrors = !!this.registerInfo.get('phone').errors;
     const passwordErrors = !!this.registerInfo.get('password').errors;
+    const isExist = this.prompt.name || this.prompt.phone;
   //  const digitsErrors = this.registerInfo.get('digits').errors;
-    return nameErrors || phoneErrors || passwordErrors; // || !!digitsErrors;
+    return nameErrors || phoneErrors || passwordErrors || isExist; // || !!digitsErrors;
   }
 
   ngAfterViewInit() {

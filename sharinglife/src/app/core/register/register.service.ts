@@ -14,11 +14,15 @@ export class RegisterService {
   clientRegister(register: Register): Observable<any> {
     return this.http.post('sl/api/lr/register', register);
   }
-
+  /**
+  *	@ param 注册名验证是否存在
+  */
   isExistname(name: string): Observable<any> {
     return this.http.get('sl/api/lr/isexistname?name=' + name);
   }
-
+ /**
+  *	@ param手机号验证是否存在
+  */
   isExistpho(phone: string): Observable<any> {
     return this.http.get('sl/api/lr/isexistpho?phone=' + phone);
   }
