@@ -9,21 +9,25 @@
 				<form [formGroup]="loginInfo" novalidate #loginform>
 						<div *ngIf="!loginState" class="form-group">
 								<span class="error">{{ loginErrorMsg }}</span>
-							</div>
-			      <div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group">
-			        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')">
-			      </div>
-			      <div *ngIf="!check.phone" class="form-group">
-			        <input type="text" class="form-control error" value="输入手机号" (focus)="focusEvent('phone')">
-			      </div>
-
-			      <div [ngClass]="{'hidden': !check.password, 'show': check.password}" class="form-group">
-			        <input type="password" class="form-control" id="password" formControlName="password" placeholder="输入密码" (blur)="blurEvent('password')">
-			      </div>
-			      <div *ngIf="!check.password" class="form-group">
-			      	<input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
 						</div>
 
+			      <div class="form-group">
+			        <input type="text" [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-control" id="phone" formControlName="phone" placeholder="用户名 / 手机号" (blur)="blurEvent('phone')">
+              <input *ngIf="!check.phone" type="text" class="form-control error" value="输入手机号" (focus)="focusEvent('phone')">
+			      </div>
+
+			      <div class="form-group">
+			        <input type="password" [ngClass]="{'hidden': !check.password, 'show': check.password}"  class="form-control" id="password" formControlName="password" placeholder="密码" (blur)="blurEvent('password')">
+              <input *ngIf="!check.password"  type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
+			      </div>
+
+            <div  class="form-group">
+              <input type="text" [ngClass]="{'hidden': !check.verifycode, 'show': check.verifycode}" class="form-control" id="verifycode" formControlName="verifycode" placeholder="验证码" (blur)="blurEvent('verifycode')">
+              <input *ngIf="!check.verifycode" type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('verifycode')">
+              <div class="verifyCode">
+                <img src="{{ verifyCodeImgSrc }}"><i class="fa fa-refresh" (click)="changeVerifyCode()"></i>
+              </div>
+            </div>
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientLogin()">登录</button>
 			    </form>
 			</div>

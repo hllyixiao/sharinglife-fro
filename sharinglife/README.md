@@ -42,6 +42,7 @@ ng generate route my-route - 生成一个新路由
 ng generate class my-class - 生成一个简易的模型类
 ng generate pipe my-pipe - 生成一个新管道
 ng generate directive my-directive - 生成一个新指令
+ng generate enum my-enum - 生成一个枚举
 
 ## 引入第三方 bootstrap
 1.npm install bootstrap --save  2.npm install @types/bootstrap --save-dev 注意：使用cnpm安装 真实的路径是：../node_modules/_bootstrap@3.3.7@bootstrap/dist/css/bootstrap.css

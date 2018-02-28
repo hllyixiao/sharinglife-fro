@@ -4,8 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HttpRequestInterceptor } from '../_interceptor/httpRequestInterceptor.interceptor';
+import { HttpResponseInterceptor } from '../_interceptor/httpResponseInterceptor.interceptor';
 import { LoginService } from './login/login.service';
 import { RegisterService } from './register/register.service';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -19,8 +21,14 @@ import { RegisterService } from './register/register.service';
       useClass: HttpRequestInterceptor,
       multi: true
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpResponseInterceptor,
+      multi: true
+    },
     LoginService,
-    RegisterService
+    RegisterService,
+    UserService
   ]
 })
 export class CoreModule { }

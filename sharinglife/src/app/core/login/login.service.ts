@@ -12,4 +12,10 @@ export class LoginService {
   clientLogin(login): Observable<any> {
     return this.http.post('sl/api/lr/login', login);
   }
+  /**
+  * @获取登录验证码
+  */
+  getVerifyCode(): Observable<any> {
+    return this.http.get('sl/api/lr/getverifycode');
+  }
 }
