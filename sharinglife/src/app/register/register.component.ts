@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
       error => { }
       );
     }
-    if (strId === 'phone' && !this.registerInfo.get('name').errors) {
+    if (strId === 'phone' && !this.registerInfo.get('phone').errors) {
       this.registerService.isExistpho(this.registerInfo.get(strId).value).subscribe(isExist => {
         this.prompt.phone = isExist;
       },

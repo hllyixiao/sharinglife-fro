@@ -28,6 +28,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## 样式参考：http://www.zuidaima.com/share/3704554819898368.htm
 
+## http://172.4.88.129:8031/swagger-ui.html
+
 ## git 命令
 git clone /git pull / git status/git add . /git commit -m"xxx" //git push
 
