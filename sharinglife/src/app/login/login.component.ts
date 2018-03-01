@@ -27,20 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   public loginState = true;
   public loginErrorMsg = '';
   public showverifyCode = false;
-  public verifyCodeImgSrc = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAIAAACHGsgUAAACv0lEQVR42u3ZMU7dQBAGYPdwghwg
-        B8gBoE9FF3EADoBQhJQT0KSlogsSr6CLhESDKHKLKNVrU9KTkUaarHZm/p1dr/2ewdYIPZt9T/an
-        2fF4PTyvW3gbVoIVa8XaN6yX33+z8L6pR+rB3w++FSN4or++vlQF+Kk/93cSVcN2jxX0mggLeE2L
-        1SYV8eLr/3Fz1V3KwzIHDLXJ0j2tIl5tWEfbDzNhpbvjscwTasOSg182l154UiaW6dUNy5RqwJIx
-        4LKzIK9UBGx7h6W/Er/sNDBoOr8IK3I3qJIyvfpg0S7O/3haBYfVYnlScSzv+OBNLoAlB28/Hppj
-        zj7/jM/BWixc2oGUVuiDpV3MMRqLmCiKKdNwKwx6NWOlLp2xeDfFEqaJ+oYIFpZKFXB32gFLDxCs
-        lAlIHZ9sR0oBLJJqeMrBB91nwziW7BJWllAAy5O6OfoUxOIjZo0v5lQECxeysVjEFOzdtRSPxFIz
-        YMWr/n8ss7cE/RQnlExD3BCQVDbg6fSCg7DkcxoAS3tFpIJYuPmqxpJ5x9NQY+mc8s7eS6vXxwcK
-        E5GDsOQzSXnQwWWZzlipVPYv8gJpVSXFRhQ4rdLMMnMKKFMUH27AM1AUKyvkEayglDYaidWw4NcT
-        SxdygHV9vpGKjrE8o+KCH3cP3CsEV7Kq1mQQlrdyIAkFHnrMzJJ7nydVZCqujnrd1m6wUiYwPTMs
-        luLkMktSsVeISFFOmVhjFt0jK4I2ltzv8LO0h0V/yUuXpLjU/FiRYWNfhWVYUtTNsl2FhVdgggtb
-        +/XeMMUiqdRIkqu7FGjlF/CSlXRYSt8ZO0pl2/KwOI+8loqxppBaElY63UDzyV4TYe17zdJlG0tx
-        WmXF6+1jmW1kREpX+veSWQ1SWaV/j1hFqRWrUerNeA1T/Kh3+1u61zCb1IpVh7V0r2FOqaVv/wBP
-        sf7dU0FbTwAAAABJRU5ErkJggg==`;
+  public verifyCodeImgSrc;
 
 
   @ViewChild('loginform') loginform;
