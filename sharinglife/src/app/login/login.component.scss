@@ -105,13 +105,13 @@ form .error {
     position: relative;
     .verifyCode {
         position: absolute;
-        top: -3px;
-        right: -9px;
+        top: -9px;
+        right: -6px;
 
         img {
-          width: 65%;
-          height: 34px;
-          cursor: pointer;
+            width: 78%;
+            height: 39px;
+            cursor: pointer;
         }
     }
 }

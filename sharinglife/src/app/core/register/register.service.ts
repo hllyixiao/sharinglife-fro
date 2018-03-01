@@ -12,7 +12,7 @@ export class RegisterService {
   *	@ param register注册用户信息
   */
   clientRegister(register: Register): Observable<any> {
-    return this.http.post('sl/api/lr/register', register);
+    return this.http.post('sl/api/lr/register', register); // {observe: 'response'}
   }
   /**
   *	@ param 注册名验证是否存在

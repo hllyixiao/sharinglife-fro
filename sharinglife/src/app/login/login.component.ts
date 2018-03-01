@@ -73,9 +73,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   // 用户登录
   clientLogin() {
     if (!this.loginInfoHasError()) {
-      if (this.loginInfo.get('verifyCode').value === '') { this.loginInfo.get('verifyCode').setValue('sharinglife'); }
+      // if (this.loginInfo.get('verifyCode').value === '') { this.loginInfo.get('verifyCode').setValue('sharinglife'); }
        this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
-          if (resp.code === 1) {
+          if (resp.stateCode === 1) {
             this.loginState = true;
             this.showverifyCode = false;
             this.userService.user = resp.user;
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             this.loginState = false;
             this.loginErrorMsg = resp.msg;
-            this.loginInfo.get('verifyCode').setValue('');
+           // this.loginInfo.get('verifyCode').setValue('');
             this.loginInfo.get('verifyCode').setValidators([Validators.required]);
             this.showverifyCode = true;
             this.changeverifyCode();
@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   changeverifyCode(): void {
     this.loginService.getVerifyCode().subscribe(
       resp => {
-        this.verifyCodeImgSrc = resp;
+        this.verifyCodeImgSrc = resp.verifyCodeImg;
       },
       error => {
 
