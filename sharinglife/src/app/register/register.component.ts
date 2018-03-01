@@ -15,16 +15,20 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   private Timer = {
     name: null,
     phone: null,
-    password: null
+    password: null,
   };
+  // 判断信息是否已被注册
   private prompt = {
     name: false,
-    phone: false
+    phone: false,
+    verityPassword: false
   };
+
+  // 控制提示信息显示
   public check = {
     name: true,
     phone: true,
-    password: true
+    password: true,
   };
 
   @ViewChild('registerform') registerform;
@@ -43,8 +47,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     this.registerInfo = this.fb.group({
             name: ['', Validators.required ],
             phone: ['', Validators.required ],
-            password: ['', Validators.required ]
-           // digits: ['', Validators.required ]
+            password: ['', Validators.required ],
+            verityPassword: ['', Validators.required ]
         });
   }
 
@@ -70,8 +74,14 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  // 隐藏提示语
+  hidePrompt(strId) {
+    if (this.prompt[strId]) { this.prompt[strId] = false; }
+  }
+
   // 字段获取焦点
   focusEvent(strId) {
+    this.prompt[strId] = false;
     this.check[strId] = true;
     this.Timer[strId] = setTimeout(() => {
       this.setFocus(strId);
@@ -101,8 +111,14 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     const phoneErrors = !!this.registerInfo.get('phone').errors;
     const passwordErrors = !!this.registerInfo.get('password').errors;
     const isExist = this.prompt.name || this.prompt.phone;
-  //  const digitsErrors = this.registerInfo.get('digits').errors;
-    return nameErrors || phoneErrors || passwordErrors || isExist; // || !!digitsErrors;
+    const passwordSame = this.registerInfo.get('password').value === this.registerInfo.get('verityPassword').value;
+    if (passwordSame) {
+      this.prompt.verityPassword = false;
+      this.registerInfo.removeControl('verityPassword');
+    } else {
+      this.prompt.verityPassword = true;
+    }
+    return nameErrors || phoneErrors || passwordErrors || isExist || !passwordSame;
   }
 
   ngAfterViewInit() {

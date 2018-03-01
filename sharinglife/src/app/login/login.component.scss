@@ -100,17 +100,19 @@ input.form-control {
 form .error {
     color: red;
 }
-.verifyCode {
-  position: relative;
-  img {
-    width: 99%;
-  }
 
-  i {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    color: #888;
-    cursor: pointer;
-  }
+.verifyCodeGroup {
+    position: relative;
+    .verifyCode {
+        position: absolute;
+        top: -3px;
+        right: -9px;
+
+        img {
+          width: 65%;
+          height: 34px;
+          cursor: pointer;
+        }
+    }
 }
+

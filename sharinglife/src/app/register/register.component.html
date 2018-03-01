@@ -8,15 +8,15 @@
 			<div class="registerFlowBody">
 				<form [formGroup]="registerInfo" novalidate #registerform>
 			      <div [ngClass]="{'hidden': !check.name, 'show': check.name}" class="form-group registrInput">
-			        <input type="text" class="form-control" id="name" formControlName="name" placeholder="姓名" (blur)="blurEvent('name')">
+			        <input type="text" class="form-control" id="name" formControlName="name" placeholder="昵称" (blur)="blurEvent('name')" (focus)="hidePrompt('name')">
 			        <div [ngClass]="{'hidden': !prompt.name, 'show': prompt.name}" class="registerHasError"><span>已注册</span></div>
             </div>
 			      <div *ngIf="!check.name" class="form-group">
-			        <input type="text" class="form-control error" value="输入姓名" (focus)="focusEvent('name')">
+			        <input type="text" class="form-control error" value="输入昵称" (focus)="focusEvent('name')">
 						</div>
 
 						<div [ngClass]="{'hidden': !check.phone, 'show': check.phone}" class="form-group registrInput">
-			        <input type="tel" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')">
+			        <input type="number" class="form-control" id="phone" formControlName="phone" placeholder="手机号" (blur)="blurEvent('phone')" (focus)="hidePrompt('phone')">
                <div [ngClass]="{'hidden': !prompt.phone, 'show': prompt.phone}" class="registerHasError"><span>已注册</span></div>
 			      </div>
 			      <div *ngIf="!check.phone" class="form-group">
@@ -24,18 +24,19 @@
 						</div>
 
 						<div [ngClass]="{'hidden': !check.password, 'show': check.password}" class="form-group registrInput">
-			        <input type="password" class="form-control" id="password" formControlName="password" placeholder="密码" (blur)="blurEvent('password')">
+			        <input type="password" class="form-control" id="password" formControlName="password" placeholder="密码" (blur)="blurEvent('password')" (focus)="hidePrompt('verityPassword')">
 			      </div>
 			      <div *ngIf="!check.password" class="form-group">
 			        <input type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
 			      </div>
 
-			      <!--<div [ngClass]="{'hidden': !validDigits, 'show': validDigits}" class="form-group">
-			        <input type="number" class="form-control" id="digits" formControlName="digits" placeholder="输入验证码" (blur)="blurEvent($event, 'digits')">
-			      </div>
-			      <div *ngIf="!validDigits" class="form-group">
-			      	<input type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('digits')">
-			      </div>-->
+            <div class="form-group registrInput">
+              <input type="password" class="form-control" id="verityPassword" formControlName="verityPassword" placeholder="确认密码" (focus)="hidePrompt('verityPassword')">
+               <div [ngClass]="{'hidden': !prompt.verityPassword, 'show': prompt.verityPassword}" class="registerHasError"><span>不一致</span></div>
+            </div>
+            <!--<div *ngIf="!check.verityPassword" class="form-group">
+              <input type="tel" class="form-control error" value="确认密码" (focus)="focusEvent('verityPassword')">
+            </div>-->
 
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientRegister()">注册</button>
 			    </form>

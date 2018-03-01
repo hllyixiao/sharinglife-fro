@@ -16,7 +16,6 @@ export class HttpResponseInterceptor implements HttpInterceptor {
                     statusText: err.statusText,
                     url: err.url
                 });
-
                 return Observable.of(res);
             } else {
                 return Observable.throw(err);

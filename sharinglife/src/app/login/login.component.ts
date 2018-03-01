@@ -27,18 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   public loginState = true;
   public loginErrorMsg = '';
   public showverifyCode = false;
-  public verifyCodeImgSrc: SafeResourceUrl;
-
-
-  @ViewChild('loginform') loginform;
-
-  constructor(
-    private fb: FormBuilder,
-    private loginService: LoginService,
-    private router: Router,
-    private userService: UserService, private sanitizer: DomSanitizer) {
-      this.verifyCodeImgSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAIAAACHGsgUAAACv0lEQVR42u3ZMU7dQBAGYPdwghwg
+  public verifyCodeImgSrc = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAIAAACHGsgUAAACv0lEQVR42u3ZMU7dQBAGYPdwghwg
         B8gBoE9FF3EADoBQhJQT0KSlogsSr6CLhESDKHKLKNVrU9KTkUaarHZm/p1dr/2ewdYIPZt9T/an
         2fF4PTyvW3gbVoIVa8XaN6yX33+z8L6pR+rB3w++FSN4or++vlQF+Kk/93cSVcN2jxX0mggLeE2L
         1SYV8eLr/3Fz1V3KwzIHDLXJ0j2tIl5tWEfbDzNhpbvjscwTasOSg182l154UiaW6dUNy5RqwJIx
@@ -51,9 +40,16 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         luLkMktSsVeISFFOmVhjFt0jK4I2ltzv8LO0h0V/yUuXpLjU/FiRYWNfhWVYUtTNsl2FhVdgggtb
         +/XeMMUiqdRIkqu7FGjlF/CSlXRYSt8ZO0pl2/KwOI+8loqxppBaElY63UDzyV4TYe17zdJlG0tx
         WmXF6+1jmW1kREpX+veSWQ1SWaV/j1hFqRWrUerNeA1T/Kh3+1u61zCb1IpVh7V0r2FOqaVv/wBP
-        sf7dU0FbTwAAAABJRU5ErkJggg==`
-      );
-     }
+        sf7dU0FbTwAAAABJRU5ErkJggg==`;
+
+
+  @ViewChild('loginform') loginform;
+
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.createForm();
@@ -99,9 +95,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             this.router.navigate(['/home']);
           } else {
             this.loginState = false;
-            this.showverifyCode = true;
             this.loginErrorMsg = resp.msg;
+            this.loginInfo.get('verifyCode').setValue('');
             this.loginInfo.get('verifyCode').setValidators([Validators.required]);
+            this.showverifyCode = true;
             this.changeverifyCode();
           }
        });
@@ -110,14 +107,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // 获取验证码
   changeverifyCode(): void {
-    console.log('1111');
-    this.loginService.getVerifyCode().subscribe(resp => {
-      console.log('2222');
+    this.loginService.getVerifyCode().subscribe(
+      resp => {
         this.verifyCodeImgSrc = resp;
       },
-    error => {
-      console.log(this.verifyCodeImgSrc);
-    });
+      error => {
+
+      });
   }
 
   // 验证注册信息填写是否正确

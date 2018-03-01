@@ -21,11 +21,11 @@
               <input *ngIf="!check.password"  type="text" class="form-control error" value="输入密码" (focus)="focusEvent('password')">
 			      </div>
 
-            <div  class="form-group">
+            <div *ngIf="showverifyCode" class="form-group verifyCodeGroup">
               <input type="text" [ngClass]="{'hidden': !check.verifyCode, 'show': check.verifyCode}" class="form-control" id="verifyCode" formControlName="verifyCode" placeholder="验证码" (blur)="blurEvent('verifyCode')">
               <input *ngIf="!check.verifyCode" type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('verifyCode')">
               <div class="verifyCode">
-                <img src="{{ verifyCodeImgSrc }}"><i class="fa fa-refresh" (click)="changeverifyCode()"></i>
+                <img [src]="verifyCodeImgSrc | safePipe" (click)="changeverifyCode()" />
               </div>
             </div>
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientLogin()">登录</button>
