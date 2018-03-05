@@ -122,6 +122,14 @@
   }
 }
 
+.verityPassword {
+  .registerHasError {
+     span {
+      left: 244px;
+      width: 100px;
+     }
+  }
+}
 
 @mixin tipcss {
     border: 0px solid #ccc;

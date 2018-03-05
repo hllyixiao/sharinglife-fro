@@ -27,14 +27,14 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
     console.log($("#feedbackcanvas"));
     html2canvas(document.body).then(canvas => {
         canvas.setAttribute('id', 'canvas');
-        console.log(document.getElementById("feedbackcanvas"));
-        console.log(this.feedBackcanvas.nativeElement.appendChild(canvas));
-        console.log(1);
+        // console.log(document.getElementById("feedbackcanvas"));
+        this.feedBackcanvas.nativeElement.appendChild(canvas);
     });
   }
 
 
   ngAfterViewInit() {
-
+    console.log(document.getElementById("#canvas"));
+    console.log(1);
   }
 }

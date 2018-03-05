@@ -25,11 +25,28 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   // 控制提示信息显示
-  public check = {
-    name: true,
-    phone: true,
-    password: true,
+  public formErrors = {
+    name: false,
+    phone: false,
+    password: false,
   };
+
+  // 验证失败错误信息提示
+  public validationMessages = {
+    name: {
+      required: '请输入昵称',
+      maxlength: '昵称不能超过10位'
+    },
+    phone: {
+      required: '请输入手机号',
+      pattern: '请输入正确格式的手机号'
+    },
+    password: {
+      required: '请输入密码',
+      minlength: '密码长度6 ~ 12位',
+      maxlength: '密码长度6 ~ 12位'
+    }
+  }
 
   @ViewChild('registerform') registerform;
 
@@ -45,9 +62,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createForm() {
     this.registerInfo = this.fb.group({
-            name: ['', Validators.required ],
-            phone: ['', Validators.required ],
-            password: ['', Validators.required ],
+            name: ['', [ Validators.required, Validators.maxLength(10) ]],
+            phone: ['', [ Validators.required, Validators.pattern(/^1[0-9]{10}$/)]], //  /^1[3-578]\d{9}$/
+            password: ['', [ Validators.required, Validators.minLength(6), Validators.maxLength(12) ]],
             verityPassword: ['', Validators.required ]
         });
   }
@@ -55,8 +72,12 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   // 字段失去焦点
   blurEvent(strId) {
     const formCtl = this.registerInfo.get(strId);
-    if (formCtl.errors && formCtl.errors.required) {
-        this.check[strId] = false;
+    if (formCtl.errors) {
+      this.formErrors[strId] = '';
+      for ( const key in formCtl.errors ) {
+        this.formErrors[strId] = this.validationMessages[strId][key];
+        break;
+      }
     }
     if (strId === 'name' && !this.registerInfo.get('name').errors) {
       this.registerService.isExistname(this.registerInfo.get(strId).value).subscribe(isExist => {
@@ -82,7 +103,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   // 字段获取焦点
   focusEvent(strId) {
     this.prompt[strId] = false;
-    this.check[strId] = true;
+    this.formErrors[strId] = '';
     this.Timer[strId] = setTimeout(() => {
       this.setFocus(strId);
     }, 50);
