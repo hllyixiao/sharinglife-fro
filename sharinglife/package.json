@@ -30,6 +30,7 @@
     "lodash": "^4.17.5",
     "ngx-bootstrap": "^2.0.2",
     "rxjs": "^5.4.2",
+    "wangeditor": "^3.0.16",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

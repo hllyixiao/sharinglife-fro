@@ -54,4 +54,41 @@ nav {
 	    color: #fff;
 	    background-color: #ea6f5a;
 	}
+
+  .navbar-home-search {
+      position: relative;
+      input {
+        @keyframes searchLength {
+          from { width: 200px }
+          to { width: 300px }
+        }
+
+        @keyframes search {
+          from { width: 300px }
+          to { width: 200px }
+        }
+        width: 200px;
+        border-radius: 100px;
+        animation: search 0.8s;
+        animation-fill-mode: forwards;
+        +a {
+          position: relative;
+          width: 25px;
+          height: 25px;
+          right: 35px;
+          color: #c1c5c4;
+          cursor: pointer;
+          text-align: center;
+          background-color: white;
+          display: inline-block;
+          border-radius: 100px;
+        };
+        &:focus {
+          border-color: #c1c5c4;
+          box-shadow: none;
+          animation: searchLength 0.8s;
+          animation-fill-mode: forwards;
+        };
+      }
+  }
 }
