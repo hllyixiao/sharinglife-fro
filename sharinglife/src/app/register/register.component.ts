@@ -26,9 +26,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // 控制提示信息显示
   public formErrors = {
-    name: false,
-    phone: false,
-    password: false,
+    name: '',
+    phone: '',
+    password: '',
   };
 
   // 验证失败错误信息提示
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
       minlength: '密码长度6 ~ 12位',
       maxlength: '密码长度6 ~ 12位'
     }
-  }
+  };
 
   @ViewChild('registerform') registerform;
 
@@ -72,13 +72,14 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   // 字段失去焦点
   blurEvent(strId) {
     const formCtl = this.registerInfo.get(strId);
-    if (formCtl.errors) {
-      this.formErrors[strId] = '';
-      for ( const key in formCtl.errors ) {
-        this.formErrors[strId] = this.validationMessages[strId][key];
-        break;
+    this.formErrors[strId] = '';
+    for (const key in formCtl.errors) {
+        if (formCtl.errors) {
+          this.formErrors[strId] = this.validationMessages[strId][key];
+          break;
       }
     }
+
     if (strId === 'name' && !this.registerInfo.get('name').errors) {
       this.registerService.isExistname(this.registerInfo.get(strId).value).subscribe(isExist => {
         this.prompt.name = isExist;
@@ -135,7 +136,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     const passwordSame = this.registerInfo.get('password').value === this.registerInfo.get('verityPassword').value;
     if (passwordSame) {
       this.prompt.verityPassword = false;
-      this.registerInfo.removeControl('verityPassword');
+      // this.registerInfo.removeControl('verityPassword');
     } else {
       this.prompt.verityPassword = true;
     }
