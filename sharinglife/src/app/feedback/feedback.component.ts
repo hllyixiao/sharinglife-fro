@@ -8,23 +8,23 @@ import * as $ from 'jquery';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit, AfterViewInit {
-  public canvasImg:'';
+  public canvasImg: '';
 
-  @ViewChild("feedBackcanvas") feedBackcanvas;
+  @ViewChild('feedBackcanvas') feedBackcanvas;
 
   constructor() { }
 
   ngOnInit() {
     $('#canvas').on('mousedown', function(e){
-      let mouseX = e.pageX - this.offsetLeft;
-      let mouseY = e.pageY - this.offsetTop;
+      const mouseX = e.pageX - this.offsetLeft;
+      const mouseY = e.pageY - this.offsetTop;
 
-      let paint = true;
+      const paint = true;
     });
   }
 
   shotCanvas() {
-    console.log($("#feedbackcanvas"));
+    console.log($('#feedbackcanvas'));
     html2canvas(document.body).then(canvas => {
         canvas.setAttribute('id', 'canvas');
         // console.log(document.getElementById("feedbackcanvas"));
@@ -34,7 +34,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-    console.log(document.getElementById("#canvas"));
+    console.log(document.getElementById('#canvas'));
     console.log(1);
   }
 }
