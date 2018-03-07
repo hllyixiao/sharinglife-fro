@@ -23,3 +23,13 @@ input[type="number"]{
     margin-top: 30px;
     height: 36px;
 }
+
+.navbar.navbar-fixed-top {
+  border-width: 0 0 1px 0;
+  border-style: solid;
+}
+
+.navbar-default {
+    background-color: #fff;
+    border-color: #f0f0f0;
+}

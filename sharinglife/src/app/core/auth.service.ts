@@ -11,7 +11,9 @@ export class AuthService {
 
   private _jwt: string;
 
-  constructor() { }
+  constructor() {
+    this.login();
+  }
 
   getToken() {
     return this._jwt;

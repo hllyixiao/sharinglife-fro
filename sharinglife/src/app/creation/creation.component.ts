@@ -8,12 +8,10 @@ import * as Editor from 'wangEditor';
 })
 export class CreationComponent implements OnInit {
 
+  public editorContent;
   constructor() { }
 
   ngOnInit() {
-  const editor = new Editor('#editor');
-        editor.create();
-    console.log(editor);
-  }
 
+  }
 }

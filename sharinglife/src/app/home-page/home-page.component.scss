@@ -1,13 +1,3 @@
-.navbar.navbar-fixed-top {
-	border-width: 0 0 1px 0;
-	border-style: solid;
-}
-
-.navbar-default {
-    background-color: #fff;
-    border-color: #f0f0f0;
-}
-
 nav {
 	@mixin log-nav-btn {
 	    float: right;
@@ -20,8 +10,8 @@ nav {
 	padding: 0;
 	.nav-limit {
 		min-width: 768px;
-	    max-width: 1440px;
-	    margin: 0 auto;
+    max-width: 1440px;
+    margin: 0 auto;
 	}
 	.logo {
 		float: left;
