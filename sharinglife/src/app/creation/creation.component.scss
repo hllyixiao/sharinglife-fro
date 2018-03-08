@@ -1,7 +1,7 @@
 nav {
   padding: 0;
   .nav-limit {
-    position: absolute;
+    position: relative;
     min-width: 768px;
     max-width: 1440px;
     margin: 0 auto;
@@ -26,9 +26,13 @@ nav {
   }
   .create-release {
     position: absolute;
-
+    right: 0px;
+    top: 12px;
   }
+
   .create-save {
     position: absolute;
+    right: 100px;
+    top: 12px;
   }
 }

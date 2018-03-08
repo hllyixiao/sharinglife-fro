@@ -45,6 +45,40 @@ nav {
 	    background-color: #ea6f5a;
 	}
 
+  .navbar-avatar {
+    @include log-nav-btn;
+    margin-top: 3px;
+    button {
+      padding: 0px;
+      border-radius: 100px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      background-color: #e2e2e2;
+    };
+    img {
+      width: 50px;
+    };
+    ul {
+      top: 56px;
+      left: -50px;
+      &:before {
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border: 8px solid transparent;
+        content: "";
+        border-color: rgba(235, 8, 19, 0);
+        border-bottom-color: #e2e1e1;
+        border-width: 9px;
+        left: 40%;
+        bottom: 100%;
+      }
+    };
+
+  }
+
   .navbar-home-search {
       position: relative;
       input {

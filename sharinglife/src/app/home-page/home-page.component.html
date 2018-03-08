@@ -7,8 +7,23 @@
       <a class="btn write-btn" target="_blank" href="/creation"  role="button">
         <i class="iconfont icon-iconfontwrite"></i>写文章
       </a>
-      <a class="btn sign-up" href="/register" role="button">注册</a>
-      <a class="btn log-in" href="/login" role="button">登录</a>
+
+      <div *ngIf="!user">
+        <a class="btn sign-up" href="/register" role="button">注册</a>
+        <a class="btn log-in" href="/login" role="button">登录</a>
+      </div>
+
+      <div *ngIf="user" class="btn-group navbar-avatar">
+        <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="/assets/img/home-nav-logo.png" alt="avatar image">
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
 
       <div class="container">
         <div class="navbar-header">
