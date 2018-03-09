@@ -35,6 +35,5 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log(document.getElementById('#canvas'));
-    console.log(1);
   }
 }
