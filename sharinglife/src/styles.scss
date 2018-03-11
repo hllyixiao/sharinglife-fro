@@ -33,3 +33,27 @@ input[type="number"]{
     background-color: #fff;
     border-color: #f0f0f0;
 }
+
+.romove-outline {
+    border: none;
+    outline: none;
+}
+
+#creation-write {
+    .w-e-toolbar {
+        border-left: 0 !important;
+        border-right: 0 !important;
+        background-color: #fff !important;
+    }
+    .w-e-text-container {
+        border: 0 !important;
+        min-height: 300px !important;
+        height: auto !important;
+        z-index: 100 !important;
+        .w-e-text {
+            padding: 0px;
+            overflow-x: hidden;  
+            overflow-y: auto; 
+        }
+    }
+}

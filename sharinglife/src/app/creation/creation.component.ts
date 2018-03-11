@@ -11,13 +11,30 @@ import { EditorConfig } from '../_models/editor-config';
 export class CreationComponent implements OnInit {
 
   public editorContent;
+  public showContentPlaceholder = true;
 
   constructor() { }
 
   ngOnInit() {
-    var editor = new Editor('#creation-write');
+    this.initWangEditor();
+  }
+
+  initWangEditor() {
+    const editor = new Editor('#creation-write');
+    const thisComp = this;
     editor.customConfig.menus = EditorConfig.wangEditorConfig.menus;
-    editor.create()
-    console.log('chup');
+    editor.customConfig.onchange = function (html) {
+      thisComp.showContentPlaceholder = html === '<p><br></p>' ? true : false;
+      thisComp.createArticle(html);
+    };
+    editor.create();
+  }
+
+  createArticle(html) {}
+
+  stopDefaultBehavior($event: any) {
+    if ($event.keyCode === 13) {
+      $event.preventDefault();
+    }
   }
 }

@@ -9,6 +9,6 @@ export class User {
     motto?: string; // 座右名
     avatarUrl?: string; // 头像图片路径
     userLastLoginIp?: string; // 最后登录的ip
-    createTime?: Date; //创建时间
-    updateTime?: Date;
+    createTime?: Date; // 创建时间
+    updateTime?: Date; // 更新时间
 }

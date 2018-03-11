@@ -1,5 +1,6 @@
 nav {
   padding: 0;
+  z-index: 99999;
   .nav-limit {
     position: relative;
     min-width: 768px;
@@ -38,6 +39,38 @@ nav {
 }
 
 .layout-main {
+  top:150px;
+  width: 90%;
+  min-width: 666px;
+  margin: 47px auto 0;
   position: relative;
-  top: 56px;
+  .creation-title {
+    margin-bottom: 15px;
+    .title{  
+        width: 100%;  
+        min-height: 44px;  
+        /*设置最小高度*/  
+        margin-left: auto;  
+        margin-right: auto;  
+        font-size: 32px;
+        line-height: 1.4;
+        font-weight: 600;
+        word-wrap: break-word;  
+        overflow-x: hidden;  
+        overflow-y: auto;  
+    }  
+    .title:empty::before {  
+        color:#b2a9a9;  
+        content:attr(placeholder);  
+    }  
+  }
+  .creation-write {
+    position: relative;
+    span {
+      position: absolute;
+      top: 45px;
+      left: 3px;
+      opacity: 0.4;
+    }
+  }
 }

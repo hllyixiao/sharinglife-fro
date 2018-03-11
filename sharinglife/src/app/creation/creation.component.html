@@ -12,13 +12,17 @@
     </div>
   </nav>
 
-  <div class="layout-main">
-    <div class="creation-image">
-      <i class="fa fa-camera-retro fa-5x"></i>
-    </div>
-    <div class="creation-title"></div>
-    <div class="creation-write">
-      <div id="creation-write"></div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="layout-main">
+        <div class="creation-title">
+          <div class="title romove-outline" contenteditable placeholder="请输入标题" (keydown)="stopDefaultBehavior($event)"></div>  
+        </div>
+        <div class="creation-write">
+          <div id="creation-write"></div>
+          <span [ngClass]="{'hidden': !showContentPlaceholder}">开始你的分享</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
