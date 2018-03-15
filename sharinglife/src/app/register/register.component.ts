@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Md5 } from "ts-md5/dist/md5";
 
 import { RegisterService } from '../core/register/register.service';
 
@@ -117,6 +118,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   clientRegister() {
     if (!this.registerInfoHasError()) {
+       this.registerInfo.value.password = Md5.hashStr(this.registerInfo.value.password).toString();
+       delete this.registerInfo.value['verityPassword'];
        this.registerService.clientRegister(this.registerInfo.value).subscribe(data => {
           if (!this.prompt.name && !this.prompt.phone) {
             this.router.navigate(['/login']);
