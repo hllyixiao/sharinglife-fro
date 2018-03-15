@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Md5 } from "ts-md5/dist/md5";
+import { Md5 } from 'ts-md5/dist/md5';
 
 import { RegisterService } from '../core/register/register.service';
 

@@ -1,6 +1,6 @@
 {
   "/sl/api": {
-    "target": "http://172.4.88.129:8031",
+    "target": "http://172.4.106.0:8031",
     "secure": false
   }
 }

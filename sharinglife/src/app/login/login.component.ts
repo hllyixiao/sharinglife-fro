@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Md5 } from "ts-md5/dist/md5";
+import { Md5 } from 'ts-md5/dist/md5';
 
 import { LoginService } from '../core/login/login.service';
 import { UserService } from '../core/user.service';
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       // if (this.loginInfo.get('verifyCode').value === '') { this.loginInfo.get('verifyCode').setValue('sharinglife'); }
        this.loginInfo.value.password = Md5.hashStr(this.loginInfo.value.password).toString();
        this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
-          if (resp.stateCode === 1) {
+          if (resp.statusCode === 1) {
             this.loginState = true;
             this.showverifyCode = false;
             this.userService.user = resp.user;

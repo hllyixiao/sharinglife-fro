@@ -75,3 +75,6 @@ angular-cli.json文件:
       ],
       declarations: []
     })
+
+### 蒲公英 https://pgy.oray.com/console/network/view?networkid=218810   客户端登陆：20039680:001/chupeng1991	
+### 后端swagger:  http://172.4.88.129:8031/swagger-ui.html
