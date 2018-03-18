@@ -8,19 +8,25 @@
         <div class="create-title">写文章</div>
       </div>
       <button type="button" class="btn btn-default create-release">发布</button>
-      <button type="button" class="btn btn-default create-save">保存</button>
+      <button type="button" class="btn btn-default create-save" (click)="saveArticle()">保存</button>
     </div>
   </nav>
 
   <div class="row">
     <div class="col-xs-12">
       <div class="layout-main">
+        <div [ngClass]="{'hidden': hideWarningContent}" class="creation-warning">
+          <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Warning </strong> {{ warningContent }}
+          </div>
+        </div>
         <div class="creation-title">
           <div class="title romove-outline" contenteditable placeholder="请输入标题" (keydown)="stopDefaultBehavior($event)"></div>  
         </div>
         <div class="creation-write">
           <div id="creation-write"></div>
-          <span [ngClass]="{'hidden': !showContentPlaceholder}">开始你的分享</span>
+          <span [ngClass]="{'hidden': hideContentPlaceholder}">开始你的分享</span>
         </div>
       </div>
     </div>

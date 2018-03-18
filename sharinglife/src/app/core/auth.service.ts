@@ -9,43 +9,49 @@ import { environment as env } from '../../environments/environment';
 */
 export class AuthService {
 
-  private _jwt: string;
+  private _jwtUser: string;
 
   constructor() {
     this.login();
   }
 
   getToken() {
-    return this._jwt;
+    return this._jwtUser;
   }
 
   logout() {
-    this._jwt = '';
+    this._jwtUser = '';
   }
 
   loggedIn() {
-    return tokenNotExpired('jwt', this._jwt);
+    return this._jwtUser; // tokenNotExpired('jwtUser', this._jwtUser);
+  }
+
+  updateJwtUserCookie(jwtUser: string) {
+    const expiresDate = new Date();
+    expiresDate.setTime(expiresDate.getTime() + 30  * 60 * 1000); // 设置cookie超时 用户重新登陆
+    document.cookie = `jwtUser=${jwtUser}; Path=/; Expires=${expiresDate.toUTCString()}`;
   }
 
   login() {
     // 检查 Jwt Cookie
-    const jwtCookie = this.getJwtCookie();
-    if (jwtCookie && tokenNotExpired('jwt', jwtCookie)) {
-      this._jwt = jwtCookie;
+    const jwtUserCookie = this.getJwtUserCookie();
+    if (jwtUserCookie) { // && tokenNotExpired('jwtUser', jwtUserCookie)
+      this._jwtUser = jwtUserCookie;
       if (env.production) {
-        this.deleteJwtCookie();
+        this.deleteJwtUserCookie();
       }
       return true;
     }
     return false;
   }
 
-  private getJwtCookie() {
-    return document.cookie.replace(/(?:(?:^|.*;\s*)jwt\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+  private getJwtUserCookie() {
+    return document.cookie.replace(/(?:(?:^|.*;\s*)jwtUser\s*\=\s*([^;]*).*$)|^.*$/, '$1');
   }
 
-  private deleteJwtCookie() {
-    document.cookie = 'jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  private deleteJwtUserCookie() {
+    document.cookie = 'jwtUser=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT';
   }
 
 }

@@ -13,23 +13,11 @@ export class AuthGuardService implements CanActivate {
   constructor(private auth: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    if (route && route.queryParams && route.queryParams.server) {
-      this.server = route.queryParams.server;
-    }
-
     if (this.auth.loggedIn()) {
       return true;
     } else {
-      if (this.auth.login()) {
-        return true;
-      } else {
-        /*if (this.server) {
-          window.location.href = env.ssoUrl + route.url[0].path + '&server=' + this.server;
-        } else {
-          window.location.href = env.ssoUrl + route.url[0].path;
-        }*/
-        return false;
-      }
+      window.location.href = 'login';
+      return false;
     }
   }
 }

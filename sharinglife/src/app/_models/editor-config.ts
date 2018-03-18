@@ -24,4 +24,6 @@ export const EditorConfig = {
     ],
     debug: location.href.indexOf('wangeditor_debug_mode=1') > 0,
   }
-}
+};
+
+

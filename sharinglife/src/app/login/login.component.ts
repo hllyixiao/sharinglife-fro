@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Md5 } from 'ts-md5/dist/md5';
 
+import { AuthService } from '../core/auth.service';
 import { LoginService } from '../core/login/login.service';
 import { UserService } from '../core/user.service';
 
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
+    private auth: AuthService,
     private userService: UserService) { }
 
   ngOnInit() {
@@ -74,18 +76,17 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   // 用户登录
   clientLogin() {
     if (!this.loginInfoHasError()) {
-      // if (this.loginInfo.get('verifyCode').value === '') { this.loginInfo.get('verifyCode').setValue('sharinglife'); }
        this.loginInfo.value.password = Md5.hashStr(this.loginInfo.value.password).toString();
        this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
           if (resp.statusCode === 1) {
             this.loginState = true;
             this.showverifyCode = false;
             this.userService.user = resp.user;
+            this.auth.updateJwtUserCookie(resp.user.name);
             this.router.navigate(['/home']);
           } else {
             this.loginState = false;
             this.loginErrorMsg = resp.msg;
-           // this.loginInfo.get('verifyCode').setValue('');
             this.loginInfo.get('verifyCode').setValidators([Validators.required]);
             this.showverifyCode = true;
             this.changeverifyCode();
@@ -99,9 +100,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loginService.getVerifyCode().subscribe(
       resp => {
         this.verifyCodeImgSrc = resp.verifyCodeImg;
-      },
-      error => {
-
       });
   }
 

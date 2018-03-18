@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiProxyUrl: ''
+  apiProxyUrl: '',
+  imgUrl: 'http://172.4.106.0:8031',
 };

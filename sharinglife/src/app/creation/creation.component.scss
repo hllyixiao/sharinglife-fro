@@ -44,6 +44,11 @@ nav {
   min-width: 666px;
   margin: 47px auto 0;
   position: relative;
+  .creation-warning {
+    position: absolute;
+    top: -140px;
+    width: 100%;
+  }
   .creation-title {
     margin-bottom: 15px;
     .title{  

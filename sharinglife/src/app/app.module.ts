@@ -9,14 +9,12 @@ import { SharedModule } from './shared/shared.module';
 import { RoutingModule } from './routing/routing.module';
 // component
 import { AppComponent } from './app.component';
+import { CreationComponent } from './creation/creation.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { CreationComponent } from './creation/creation.component';
-
-
 
 @NgModule({
   imports: [
@@ -30,12 +28,12 @@ import { CreationComponent } from './creation/creation.component';
   ],
   declarations: [
     AppComponent,
+    CreationComponent,
     HomePageComponent,
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
     FeedbackComponent,
-    CreationComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
