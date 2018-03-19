@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // component
 import { CreationComponent } from '../creation/creation.component';
+import { DraftListComponent } from '../draft-list/draft-list.component';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
@@ -17,6 +18,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomePageComponent },
   { path: 'creation', component: CreationComponent}, //, canActivate: [AuthGuardService] },
+  { path: 'draftlist', component: DraftListComponent}, //, canActivate: [AuthGuardService] },
+  { path: 'edit/:articleId', component: CreationComponent}, //, canActivate: [AuthGuardService] },
   // 当URL为空时就会访问那里
   { path: '' , redirectTo: '/home', pathMatch: 'full'},
   // 当所请求的URL不匹配前面定义的路由表中的任何路径时，路由器就会选择此路由

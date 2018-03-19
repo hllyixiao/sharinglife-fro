@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { DraftListComponent } from './draft-list/draft-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
     RegisterComponent,
     PageNotFoundComponent,
     FeedbackComponent,
+    DraftListComponent,
+    NavbarComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

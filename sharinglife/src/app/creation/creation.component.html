@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="creation-title">
-          <div class="title romove-outline" contenteditable placeholder="请输入标题" (keydown)="stopDefaultBehavior($event)"></div>  
+          <div id="creation-title" class="title romove-outline" contenteditable placeholder="请输入标题" (keyup)="bindTitle($event)" (keydown)="stopDefaultBehavior($event)"></div>
         </div>
         <div class="creation-write">
           <div id="creation-write"></div>

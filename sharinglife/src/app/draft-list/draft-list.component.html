@@ -1,0 +1,50 @@
+ <app-navbar></app-navbar>
+ <div class="row">
+  <div class="col-xs-12">
+    <div class="layout-main">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="section-title"><h2>我的草稿</h2></div>
+          <div class="draft-item-list">
+              <div class="draft-item" id="item-{{itemId}}">
+                <h2><a routerLink="edit/{{13223}}" target="_blank">title</a></h2>
+                <div class="item-content">
+                  <img src="/assets/img/home-nav-logo.png">
+                  我们的世界是如此的美丽...
+                </div>
+                <div class="item-foot">
+                  <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal">删除</a>
+                  <span class="operate-bull">•</span>
+                  <a routerLink="edit/{{13223}}">编辑</a>
+                  <span class="operate-bull">•</span>
+                  10 天前
+                  <span class="operate-bull">•</span>
+                  共 0 字
+                  <span class="operate-bull">•</span>
+                  文章
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteArticleModal" tabindex="-1" role="dialog" aria-labelledby="deleteArticleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteArticleModalLabel">删除草稿</h4>
+      </div>
+      <div class="modal-body">
+        确定删除当前草稿？
+      </div>
+      <div class="modal-footer delete-article-modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>

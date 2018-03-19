@@ -2,6 +2,12 @@
 
 @import '~bootstrap/dist/css/bootstrap.css';
 
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+  font-size: 14px;
+  outline: 0;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -52,8 +58,8 @@ input[type="number"]{
         z-index: 100 !important;
         .w-e-text {
             padding: 0px;
-            overflow-x: hidden;  
-            overflow-y: auto; 
+            overflow-x: hidden;
+            overflow-y: auto;
         }
     }
 }

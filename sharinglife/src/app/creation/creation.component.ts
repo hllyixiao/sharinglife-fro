@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import * as Editor from 'wangEditor';
-import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/Rx';
 
 import { ArticleService } from '../core/article.service';
@@ -18,11 +19,13 @@ export class CreationComponent implements OnInit {
   public article = {
     title: '',
     content: '',
+    length: 0,
     userId: 0
   };
   public hideContentPlaceholder = false;
   public hideWarningContent = true;
   public warningContent = '';
+  public articleChangeSubject = new Subject();
 
   constructor(
     private userService: UserService,
@@ -32,6 +35,9 @@ export class CreationComponent implements OnInit {
   ngOnInit() {
     this.initWangEditor();
     this.hideHint();
+    this.articleChangeSubject.debounceTime(3000).subscribe(
+        val => this.createArticle()
+    );
     //TODO this.article.userId = this.userService.user.id;
   }
 
@@ -42,22 +48,31 @@ export class CreationComponent implements OnInit {
     this.editor.customConfig.uploadImgServer = 'sl/api/article/addarticlepicture';
     this.editor.customConfig.uploadFileName = 'file';
     this.editor.customConfig.withCredentials = true;
-    this.editor.customConfig.uploadImgMaxSize = 9 * 1024 * 1024; // 图片大小
-    this.editor.customConfig.uploadImgTimeout = 10000;
+    this.editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024; // 图片大小
+    this.editor.customConfig.uploadImgMaxLength = 1 // 限制一次最多上传张图片
+    this.editor.customConfig.uploadImgTimeout = 10000; // 超时时长 默认10s
     this.editor.customConfig.uploadImgParams = {
       'userId': 1, //TODO this.userService.user.id,
       'articleId': 123012
     };
 
+    this.editor.customConfig.uploadImgHooks = {
+      // 服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置,但必须是一个 JSON 格式字符串
+      customInsert: function (insertImg, result, editor) {
+          const url = result.url;
+          insertImg(url);
+      }
+    };
+    // 上传图片的错误提示, 默认使用alert弹出
     this.editor.customConfig.customAlert = function (info) {
       thisComp.hideWarningContent = false;
       thisComp.warningContent = info;
     };
 
     this.editor.customConfig.onchange = function (html) {
-      Observable.interval(300).take(5).debounceTime(5000).subscribe(
-        () => thisComp.hideWarningContent = true
-      );
+      thisComp.article.content = html;
+      thisComp.article.length = thisComp.editor.txt.text().replace(/&nbsp;/g, ' ').length;
+      thisComp.articleChangeSubject.next(thisComp.article);
     };
     this.editor.create();
   }
@@ -71,11 +86,12 @@ export class CreationComponent implements OnInit {
   }
 
   saveArticle() {
-    this.createArticle(this.editor.txt.html());
+    this.article.content = this.editor.txt.html();
+    this.article.length = this.editor.txt.text().replace(/&nbsp;/g, ' ').length;
+    this.createArticle();
   }
 
-  createArticle(html) {
-    this.article.content = html;
+  createArticle() {
     this.articleService.addArticle(this.article).subscribe(
       req => console.log(req)
     );
@@ -86,6 +102,11 @@ export class CreationComponent implements OnInit {
     if ($event.keyCode === 13) {
       $event.preventDefault();
     }
+   }
+
+  // 绑定标题输入，并3s不改变自动保存
+  bindTitle($event: any) {
     this.article.title = $event.target.innerText;
+    this.articleChangeSubject.next(this.article);
   }
 }

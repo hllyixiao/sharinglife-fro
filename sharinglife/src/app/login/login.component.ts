@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.check[strId] = true;
     this.Timer[strId] = setTimeout(() => {
       this.setFocus(strId);
-    }, 50);
+    }, 1);
   }
 
   setFocus(strId): void {
