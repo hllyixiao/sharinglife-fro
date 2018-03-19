@@ -19,4 +19,11 @@ export class ArticleService {
   getAllDraft(userId: number): Observable<any> {
     return this.http.get('sl/api/article/getalldraft?userId=' + userId);
   }
+
+  /**
+  * @根据用户根据文章Id获取文章
+  */
+  getArticleById(articleId: number): Observable<any> {
+    return this.http.get('sl/api/article/getarticlebyid?articleId=' + articleId);
+  }
 }

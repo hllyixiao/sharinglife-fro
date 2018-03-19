@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import * as Editor from 'wangEditor';
 import { Subject } from 'rxjs/Subject';
@@ -8,6 +8,8 @@ import { ArticleService } from '../core/article.service';
 import { EditorConfig } from '../_models/editor-config';
 import { UserService } from '../core/user.service';
 
+import { Article } from '../_models/article';
+
 @Component({
   selector: 'app-creation',
   templateUrl: './creation.component.html',
@@ -16,29 +18,47 @@ import { UserService } from '../core/user.service';
 export class CreationComponent implements OnInit {
 
   public editor;
-  public article = {
+  public article: Article = {
+    id: -1,
+    state: '',
     title: '',
     content: '',
     length: 0,
-    userId: 0
+    userId: -1
   };
   public hideContentPlaceholder = false;
   public hideWarningContent = true;
   public warningContent = '';
+  public editTitle = '';
   public articleChangeSubject = new Subject();
 
   constructor(
     private userService: UserService,
     private articleService: ArticleService,
-    private eleRef: ElementRef) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private eleRef: ElementRef,
+    private render: Renderer2) { }
 
   ngOnInit() {
     this.initWangEditor();
     this.hideHint();
+    //TODO this.article.userId = this.userService.user.id;
+    this.article.id = Number(this.route.snapshot.paramMap.get('articleId'));
+    if (this.article.id !== -1) { // 表示当前属于文章编辑状态，等于-1表示新创文章。
+      this.articleService.getArticleById(this.article.id).subscribe(
+        article => {
+          if (article.content !== '<p><br></p>') {
+            this.hideContentPlaceholder = true;
+          }
+          this.editor.txt.html(article.content);
+          this.editTitle = article.title;
+        }
+      );
+    }
     this.articleChangeSubject.debounceTime(3000).subscribe(
         val => this.createArticle()
     );
-    //TODO this.article.userId = this.userService.user.id;
   }
 
   initWangEditor() {
@@ -49,7 +69,7 @@ export class CreationComponent implements OnInit {
     this.editor.customConfig.uploadFileName = 'file';
     this.editor.customConfig.withCredentials = true;
     this.editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024; // 图片大小
-    this.editor.customConfig.uploadImgMaxLength = 1 // 限制一次最多上传张图片
+    this.editor.customConfig.uploadImgMaxLength = 1; // 限制一次最多上传张图片
     this.editor.customConfig.uploadImgTimeout = 10000; // 超时时长 默认10s
     this.editor.customConfig.uploadImgParams = {
       'userId': 1, //TODO this.userService.user.id,
@@ -71,7 +91,7 @@ export class CreationComponent implements OnInit {
 
     this.editor.customConfig.onchange = function (html) {
       thisComp.article.content = html;
-      thisComp.article.length = thisComp.editor.txt.text().replace(/&nbsp;/g, ' ').length;
+      thisComp.article.length = this.getPureTxt(this.article.content).length;
       thisComp.articleChangeSubject.next(thisComp.article);
     };
     this.editor.create();
@@ -87,7 +107,7 @@ export class CreationComponent implements OnInit {
 
   saveArticle() {
     this.article.content = this.editor.txt.html();
-    this.article.length = this.editor.txt.text().replace(/&nbsp;/g, ' ').length;
+    this.article.length = this.getPureTxt(this.article.content).length;
     this.createArticle();
   }
 
@@ -95,6 +115,15 @@ export class CreationComponent implements OnInit {
     this.articleService.addArticle(this.article).subscribe(
       req => console.log(req)
     );
+  }
+
+  // 获取富文本框中的纯文本
+  getPureTxt(html): string {
+    const entity = html.replace(/<[^>]*>/g, ''); // 去除html标签
+    const div = this.render.createElement('div');
+    div.innerHTML = entity;
+    const pureTxt = div.innerText || div.textContent; // html实体字符转换成正常字符
+    return pureTxt;
   }
 
   // 回车键不让输入
