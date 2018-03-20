@@ -13,6 +13,14 @@ export class ArticleService {
   addArticle(article): Observable<any> {
     return this.http.post('sl/api/article/addarticle', article);
   }
+
+  /**
+  * @更新文章
+  */
+  updateArticle(article): Observable<any> {
+    return this.http.post('sl/api/article/updatearticle', article);
+  }
+
   /**
   * @根据用户Id查询所用该用户的文章草稿
   */
@@ -25,5 +33,12 @@ export class ArticleService {
   */
   getArticleById(articleId: number): Observable<any> {
     return this.http.get('sl/api/article/getarticlebyid?articleId=' + articleId);
+  }
+
+  /**
+  * @根据文章Id刪除文章
+  */
+  deleteArticleById(articleId: number): Observable<any> {
+    return this.http.get('sl/api/article/deletearticlebyid?articleId=' + articleId);
   }
 }

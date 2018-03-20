@@ -19,10 +19,11 @@ export class CreationComponent implements OnInit {
 
   public editor;
   public article: Article = {
-    id: -1,
-    state: '',
+    id: 0,
+    state: 'draft',
     title: '',
     content: '',
+    contentTxt: '',
     length: 0,
     userId: -1
   };
@@ -45,7 +46,7 @@ export class CreationComponent implements OnInit {
     this.hideHint();
     //TODO this.article.userId = this.userService.user.id;
     this.article.id = Number(this.route.snapshot.paramMap.get('articleId'));
-    if (this.article.id !== -1) { // 表示当前属于文章编辑状态，等于-1表示新创文章。
+    if (this.article.id > 0) { // 表示当前属于文章编辑状态，等于-1表示新创文章。
       this.articleService.getArticleById(this.article.id).subscribe(
         article => {
           if (article.content !== '<p><br></p>') {
@@ -57,7 +58,7 @@ export class CreationComponent implements OnInit {
       );
     }
     this.articleChangeSubject.debounceTime(3000).subscribe(
-        val => this.createArticle()
+        val => this.saveArticle()
     );
   }
 
@@ -72,11 +73,16 @@ export class CreationComponent implements OnInit {
     this.editor.customConfig.uploadImgMaxLength = 1; // 限制一次最多上传张图片
     this.editor.customConfig.uploadImgTimeout = 10000; // 超时时长 默认10s
     this.editor.customConfig.uploadImgParams = {
-      'userId': 1, //TODO this.userService.user.id,
+      'userId': 1, //TODO this.userService.user,
       'articleId': 123012
     };
 
     this.editor.customConfig.uploadImgHooks = {
+      before: function (xhr, editor, files) {
+        if (thisComp.article.id === 0) {
+          this.saveArticle();
+        }
+      },
       // 服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置,但必须是一个 JSON 格式字符串
       customInsert: function (insertImg, result, editor) {
           const url = result.url;
@@ -90,8 +96,6 @@ export class CreationComponent implements OnInit {
     };
 
     this.editor.customConfig.onchange = function (html) {
-      thisComp.article.content = html;
-      thisComp.article.length = this.getPureTxt(this.article.content).length;
       thisComp.articleChangeSubject.next(thisComp.article);
     };
     this.editor.create();
@@ -107,14 +111,18 @@ export class CreationComponent implements OnInit {
 
   saveArticle() {
     this.article.content = this.editor.txt.html();
+    this.article.contentTxt = this.getPureTxt(this.article.content);
     this.article.length = this.getPureTxt(this.article.content).length;
-    this.createArticle();
-  }
 
-  createArticle() {
-    this.articleService.addArticle(this.article).subscribe(
-      req => console.log(req)
-    );
+    if (this.article.id > 0) { // 新建文章
+      this.articleService.addArticle(this.article).subscribe(
+        req => this.router.navigate(['../edit/article', req.articleId])
+      );
+    }else { // 更新文章
+      this.articleService.updateArticle(this.article).subscribe(
+        req => {}
+      );
+    }
   }
 
   // 获取富文本框中的纯文本
