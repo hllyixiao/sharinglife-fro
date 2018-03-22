@@ -1,3 +1,8 @@
+.creation-article {
+    background: #fff;
+    min-height: 666px;
+}
+
 nav {
   padding: 0;
   z-index: 99999;
@@ -40,8 +45,7 @@ nav {
 
 .layout-main {
   top:150px;
-  width: 90%;
-  min-width: 666px;
+  width: 776px;
   margin: 47px auto 0;
   position: relative;
   .creation-warning {
@@ -51,23 +55,23 @@ nav {
   }
   .creation-title {
     margin-bottom: 15px;
-    .title{  
-        width: 100%;  
-        min-height: 44px;  
-        /*设置最小高度*/  
-        margin-left: auto;  
-        margin-right: auto;  
+    .title{
+        width: 100%;
+        min-height: 44px;
+        /*设置最小高度*/
+        margin-left: auto;
+        margin-right: auto;
         font-size: 32px;
         line-height: 1.4;
         font-weight: 600;
-        word-wrap: break-word;  
-        overflow-x: hidden;  
-        overflow-y: auto;  
-    }  
-    .title:empty::before {  
-        color:#b2a9a9;  
-        content:attr(placeholder);  
-    }  
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .title:empty::before {
+        color:#b2a9a9;
+        content:attr(placeholder);
+    }
   }
   .creation-write {
     position: relative;

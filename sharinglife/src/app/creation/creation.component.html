@@ -1,4 +1,4 @@
-<div class="container">
+<div class="creation-article">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="nav-limit">
       <a class="navbar-brand logo" href="/">
@@ -12,23 +12,19 @@
     </div>
   </nav>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="layout-main">
-        <div [ngClass]="{'hidden': hideWarningContent}" class="creation-warning">
-          <div class="alert alert-warning alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <strong>Warning </strong> {{ warningContent }}
-          </div>
-        </div>
-        <div class="creation-title">
-          <div id="creation-title" class="title romove-outline" contenteditable placeholder="请输入标题" (keyup)="bindTitle($event)" (keydown)="stopDefaultBehavior($event)">{{ editTitle }}</div>
-        </div>
-        <div class="creation-write">
-          <div id="creation-write"></div>
-          <span [ngClass]="{'hidden': hideContentPlaceholder}">开始你的分享</span>
-        </div>
+  <div class="layout-main">
+    <div [ngClass]="{'hidden': hideWarningContent}" class="creation-warning">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Warning </strong> {{ warningContent }}
       </div>
+    </div>
+    <div class="creation-title">
+      <div id="creation-title" class="title romove-outline" contenteditable placeholder="请输入标题" (keyup)="bindTitle($event)" (keydown)="stopDefaultBehavior($event)">{{ editTitle }}</div>
+    </div>
+    <div class="creation-write">
+      <div id="creation-write"></div>
+      <span [ngClass]="{'hidden': hideContentPlaceholder}">开始你的分享</span>
     </div>
   </div>
 </div>

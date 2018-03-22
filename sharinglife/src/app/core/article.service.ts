@@ -29,10 +29,16 @@ export class ArticleService {
   }
 
   /**
-  * @根据用户根据文章Id获取文章
+  * @根据文章Id获取文章
   */
   getArticleById(articleId: number): Observable<any> {
     return this.http.get('sl/api/article/getarticlebyid?articleId=' + articleId);
+  }
+  /**
+  * @根据用户Id获取部分文章
+  */
+  draftchunk(chunkInfo): Observable<any> {
+    return this.http.post('sl/api/article/draftchunk', chunkInfo);
   }
 
   /**

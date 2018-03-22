@@ -1,118 +1,42 @@
-nav {
-	@mixin log-nav-btn {
-	    float: right;
-	    height: 40px;
-	    font-size: 15px;
-	    line-height: 24px;
-	    border-radius: 20px;
-	    margin: 9px 5px 0 15px;
-	};
-	padding: 0;
-	.nav-limit {
-		min-width: 768px;
-    max-width: 1440px;
-    margin: 0 auto;
-	}
-	.logo {
-		float: left;
-		height: 56px;
-		padding: 0;
-		img {
-			height: 56px;
-		}
-	}
-	.log-in {
-		@include log-nav-btn;
-		color: #969696;
-		&:hover {
-			color: red;
-		}
-	}
-	.sign-up {
-		@include log-nav-btn;
-	    width: 80px;
-	    color: #ea6f5a;
-	    border: 1px solid rgba(236,97,73,.7);
-	    background-color: transparent;
-	    &:hover {
-	    	background-color: #f55b5b21;
-	    };
-	}
-	.write-btn {
-		@include log-nav-btn;
-	    width: 100px;
-	    color: #fff;
-	    background-color: #ea6f5a;
-	}
-
-  .navbar-avatar {
-    @include log-nav-btn;
-    margin-top: 3px;
-    button {
-      padding: 0px;
-      border-radius: 100px;
-      width: 50px;
-      height: 50px;
-      border: none;
-      background-color: #e2e2e2;
-    };
-    img {
-      width: 50px;
-    };
-    ul {
-      top: 56px;
-      left: -50px;
-      &:before {
-        position: absolute;
-        display: block;
-        width: 0;
-        height: 0;
-        border: 8px solid transparent;
-        content: "";
-        border-color: rgba(235, 8, 19, 0);
-        border-bottom-color: #e2e1e1;
-        border-width: 9px;
-        left: 40%;
-        bottom: 100%;
-      }
-    };
-
+.layout-main {
+  top: 50px;
+  width: 73%;
+  min-width: 666px;
+  margin: auto;
+  position: relative;
+  .section-title {
+    padding: 0 0 3px;
+    margin: 0 0 10px;
+    border-bottom: solid 1px #ddd;
   }
-
-  .navbar-home-search {
-      position: relative;
-      input {
-        @keyframes searchLength {
-          from { width: 200px }
-          to { width: 300px }
-        }
-
-        @keyframes search {
-          from { width: 300px }
-          to { width: 200px }
-        }
+  .draft-item {
+    margin: 6px 0 5px 0;
+    a {
+      text-decoration: none
+    }
+    .item-content {
+      img {
+        display:block;
+        margin: 6px 0;
+        overflow: hidden;
         width: 200px;
-        border-radius: 100px;
-        animation: search 0.8s;
-        animation-fill-mode: forwards;
-        +a {
-          position: relative;
-          width: 25px;
-          height: 25px;
-          right: 35px;
-          color: #c1c5c4;
-          cursor: pointer;
-          text-align: center;
-          background-color: white;
-          display: inline-block;
-          border-radius: 100px;
-        };
-        &:focus {
-          border-color: #c1c5c4;
-          box-shadow: none;
-          animation: searchLength 0.8s;
-          animation-fill-mode: forwards;
-        };
+        height: auto;
       }
+    }
+    .item-foot {
+      color: #999;
+      font-weight: 400;
+      margin-top: 8px;
+      .deleteLink {
+        cursor: pointer;
+      }
+      .operate-bull {
+        padding: 0 3px;
+        color: #AAA;
+      }
+    }
+    +.draft-item {
+      border-top: 1px solid #eee;
+    }
   }
 }

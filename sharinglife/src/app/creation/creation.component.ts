@@ -57,6 +57,7 @@ export class CreationComponent implements OnInit {
         }
       );
     }
+    // 3s后没有事件触发就发送该请求
     this.articleChangeSubject.debounceTime(3000).subscribe(
         val => this.saveArticle()
     );
@@ -78,15 +79,13 @@ export class CreationComponent implements OnInit {
     };
 
     this.editor.customConfig.uploadImgHooks = {
-      before: function (xhr, editor, files) {
-        if (thisComp.article.id === 0) {
-          this.saveArticle();
-        }
-      },
       // 服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置,但必须是一个 JSON 格式字符串
       customInsert: function (insertImg, result, editor) {
-          const url = result.url;
-          insertImg(url);
+        insertImg(result.url);
+        this.thisComp.article.id = result.article.id;
+      },
+      success: function (xhr, editor, result) {
+        // 图片上传并返回结果，图片插入成功之后触发
       }
     };
     // 上传图片的错误提示, 默认使用alert弹出
@@ -114,7 +113,7 @@ export class CreationComponent implements OnInit {
     this.article.contentTxt = this.getPureTxt(this.article.content);
     this.article.length = this.getPureTxt(this.article.content).length;
 
-    if (this.article.id > 0) { // 新建文章
+    if (this.article.id === 0) { // 新建文章
       this.articleService.addArticle(this.article).subscribe(
         req => this.router.navigate(['../edit/article', req.articleId])
       );
