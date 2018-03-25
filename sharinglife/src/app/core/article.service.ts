@@ -32,7 +32,7 @@ export class ArticleService {
   * @根据文章Id获取文章
   */
   getArticleById(articleId: number): Observable<any> {
-    return this.http.get('sl/api/article/getarticlebyid?articleId=' + articleId);
+    return this.http.get('/sl/api/article/getbyid/' + articleId);
   }
   /**
   * @根据用户Id获取部分文章

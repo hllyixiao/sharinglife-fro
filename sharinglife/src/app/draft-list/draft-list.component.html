@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-xs-8">
           <div class="section-title"><h2>我的草稿</h2></div>
-          <div class="draft-item-list">
-              <div *ngFor="let item of draftList;" class="draft-item" id="item-{{itemId}}">
+          <div class="article-item-list">
+              <div *ngFor="let item of draftList;" class="article-item" id="article-{{itemId}}">
                 <h2><a [routerLink]="['../edit/article', item.id]" target="_blank">{{ item.title }}</a></h2>
                 <div class="item-content">
                   <img *ngIf="!!item.titleImg" [src]="item.titleImg">

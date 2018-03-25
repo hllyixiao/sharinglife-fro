@@ -6,23 +6,22 @@
     <div class="layout-main">
       <div class="row">
         <div class="col-xs-8">
-          <div class="draft-item-list">
-              <div *ngFor="let item of draftList;" class="draft-item" id="item-{{itemId}}">
-                <h2><a [routerLink]="['../edit/article', item.id]" target="_blank">{{ item.title }}</a></h2>
-                <div class="item-content">
-                  <img *ngIf="!!item.titleImg" [src]="item.titleImg">
-                  {{item.contentTxt}}
+          <div class="article-item-list">
+              <div *ngFor="let item of draftList;" class="article-item" id="article-{{itemId}}">
+                <div class="authorInfo">
+                  
                 </div>
-                <div class="item-foot">
-                  <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.id)">删除</a>
-                  <span class="operate-bull">•</span>
-                  <a [routerLink]="['../edit/article', item.id]" target="_blank">编辑</a>
-                  <span class="operate-bull">•</span>
-                  {{item.createTime}} 天前
-                  <span class="operate-bull">•</span>
-                  共 {{item.length}} 字
-                  <span class="operate-bull">•</span>
-                  文章
+                <div class="contentItem">
+                  <h2 class="cintentItem-title">{{ item.title }}</h2>
+                  <div class="richContent" [innerHtml] = "htmlInput | safePipe: 'Html'"></div>
+                  <div class="content-actions">
+                    <button type="button" class="btn btn-default"><i class="fa fa-thumbs-o-up"> 300</i></button>
+                    <button type="button" class="btn btn-default"><i class="fa fa-eye"> 4344</i></button>
+                    <button type="button" class="btn btn-default"><i class="fa fa-comments-o"> 300 条评论</i></button>
+                    <button type="button" class="btn btn-default"><i class="iconfont icon-share"> 分享</i></button>
+                    <button type="button" class="btn btn-default"><i class="fa fa-star-o"> 收藏</i></button>
+                    <button type="button" class="btn btn-default">收起 <i class="fa fa-angle-up"></i></button>
+                  </div>
                 </div>
               </div>
           </div>

@@ -76,5 +76,7 @@ angular-cli.json文件:
       declarations: []
     })
 
+### font awesome  http://www.fontawesome.com.cn/faicons/
+
 ### 蒲公英 https://pgy.oray.com/console/network/view?networkid=218810   客户端登陆：20039680:001/chupeng1991	
-### 后端swagger:  http://172.4.88.129:8031/swagger-ui.html
+### 后端swagger:  http://172.4.106.0:8031/swagger-ui.html

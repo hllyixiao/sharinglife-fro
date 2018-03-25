@@ -1,7 +1,7 @@
 .layout-main {
   top: 50px;
   width: 73%;
-  min-width: 666px;
+  min-width: 776px;
   margin: auto;
   position: relative;
   .section-title {
@@ -9,7 +9,7 @@
     margin: 0 0 10px;
     border-bottom: solid 1px #ddd;
   }
-  .draft-item {
+  .article-item {
     margin: 6px 0 5px 0;
     a {
       text-decoration: none
@@ -35,7 +35,7 @@
         color: #AAA;
       }
     }
-    +.draft-item {
+    +.article-item {
       border-top: 1px solid #eee;
     }
   }

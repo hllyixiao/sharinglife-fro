@@ -42,7 +42,8 @@ export class DraftListComponent implements OnInit {
       length: 28,
       createTime: 2,
       titleImg: '/assets/img/home-nav-logo.png'
-    },{
+    },
+    {
       id: 1234,
       title: 'title_1',
       contentTxt: '我們的世界是如此的美麗，我要...',
@@ -93,7 +94,7 @@ export class DraftListComponent implements OnInit {
         const srcollBottom = scrollHeight - clientHeight - scrollTop;
         // 滚动到底部一定距离后，追加几条数据
         if (srcollBottom < 800) {
-          this.articleService.draftchunk({start:0, length:10, userId:2}).subscribe( // this.userService.user.id
+          this.articleService.draftchunk({start: 0, length: 10, userId: 2}).subscribe( // this.userService.user.id
             req => this.draftList = _.concat(this.draftList, req.draftchunk)
           );
         }

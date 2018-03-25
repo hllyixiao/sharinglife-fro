@@ -25,7 +25,7 @@
               <input type="text" [ngClass]="{'hidden': !check.verifyCode, 'show': check.verifyCode}" class="form-control" id="verifyCode" formControlName="verifyCode" placeholder="验证码" (blur)="blurEvent('verifyCode')">
               <input *ngIf="!check.verifyCode" type="text" class="form-control error" value="输入验证码" (focus)="focusEvent('verifyCode')">
               <div class="verifyCode">
-                <img [src]="verifyCodeImgSrc | safePipe" (click)="changeverifyCode()" />
+                <img [src]="verifyCodeImgSrc | safePipe: 'Url'" (click)="changeverifyCode()" />
               </div>
             </div>
 			      <button type="submit" class="btn Button--primary Button--blue Register-submitButton" (click)="clientLogin()">登录</button>
