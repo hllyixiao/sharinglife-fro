@@ -134,7 +134,6 @@ export class CreationComponent implements OnInit {
     this.article.contentHtml = this.editor.txt.html();
     this.article.contentTxt = this.getPureTxt(this.article.contentHtml);
     this.article.contentSize = this.getPureTxt(this.article.contentHtml).length;
-
     if (this.article.id === 0) { // 新建文章
       this.articleService.addArticle(this.article).subscribe(
         articleId => {
@@ -169,6 +168,11 @@ export class CreationComponent implements OnInit {
   // 绑定标题输入，并3s不改变自动保存
   bindTitle($event: any) {
     this.article.title = $event.target.innerText;
-    this.articleChangeSubject.next(this.article);
+    if (this.article.id === 0 && this.createArticle) { // create 立即上传
+      this.createArticle = false;
+      this.saveArticle();
+    }else { //  update延迟3s
+      this.articleChangeSubject.next(this.article);
+    }
   }
 }
