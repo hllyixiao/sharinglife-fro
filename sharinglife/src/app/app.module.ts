@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FeedbackComponent } from './feedback/feedback.component';
 import { DraftListComponent } from './draft-list/draft-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MyManagementComponent } from './my-management/my-management.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FeedbackComponent,
     DraftListComponent,
     NavbarComponent,
+    MyManagementComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
