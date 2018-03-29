@@ -1,0 +1,45 @@
+.layout-main {
+  top: 50px;
+  width: 1000px;
+  margin: auto;
+  position: relative;
+  .section-title {
+    padding: 0 0 3px;
+    margin: 0 0 10px;
+    border-bottom: solid 1px #ddd;
+  }
+  .article-item {
+    margin: 6px 0 5px 0;
+    a {
+      text-decoration: none
+    }
+    .item-content {
+      img {
+        display:block;
+        margin: 6px 0;
+        overflow: hidden;
+        width: 200px;
+        height: auto;
+      }
+    }
+    .item-foot {
+      color: #999;
+      font-weight: 400;
+      margin-top: 8px;
+      .deleteLink {
+        cursor: pointer;
+      }
+      .operate-bull {
+        padding: 0 3px;
+        color: #AAA;
+      }
+    }
+    +.article-item {
+      border-top: 1px solid #eee;
+    }
+  }
+}
+
+.delete-article-modal-footer {
+  border-top: 0;
+}

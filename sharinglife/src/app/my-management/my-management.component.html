@@ -1,3 +1,77 @@
-<p>
-  my-management works!
-</p>
+<div class="container">
+  <app-navbar></app-navbar>
+</div>
+<div class="layout-main">
+  <div class="row">
+    <div class="col-xs-3">
+      <img src="../../assets/img/show.jpg" alt="avatar image" class="img-thumbnail">
+    </div>
+    <div class="col-xs-9">
+      ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="section-title"><h2>我的草稿</h2></div>
+      <div class="article-item-list">
+          <div *ngFor="let item of draftList;" class="article-item" id="article-{{itemId}}">
+            <h2><a [routerLink]="['../edit/article', item.id]" target="_blank">{{ item.title }}</a></h2>
+            <div class="item-content">
+              <img *ngIf="!!item.titleImg" [src]="item.titleImg">
+              {{item.contentTxt}}
+            </div>
+            <div class="item-foot">
+              <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.id)">删除</a>
+              <span class="operate-bull">•</span>
+              <a [routerLink]="['../edit/article', item.id]" target="_blank">编辑</a>
+              <span class="operate-bull">•</span>
+              {{item.createTime}} 天前
+              <span class="operate-bull">•</span>
+              共 {{item.length}} 字
+              <span class="operate-bull">•</span>
+              文章
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <!-- Standard button -->
+      <button type="button" class="btn btn-default">（默认样式）Default</button>
+
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <button type="button" class="btn btn-primary">（首选项）Primary</button>
+
+      <!-- Indicates a successful or positive action -->
+      <button type="button" class="btn btn-success">（成功）Success</button>
+
+      <!-- Contextual button for informational alert messages -->
+      <button type="button" class="btn btn-info">（一般信息）Info</button>
+
+      <!-- Indicates caution should be taken with this action -->
+      <button type="button" class="btn btn-warning">（警告）Warning</button>
+
+      <!-- Indicates a dangerous or potentially negative action -->
+      <button type="button" class="btn btn-danger">（危险）Danger</button>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div bsModal #deleteArticleModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteArtilceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">删除草稿</h4>
+        <button type="button" class="close pull-right" (click)="deleteArticleModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>确定删除该文章吗？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteArticleModal.hide()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="deleteArticle(deleteArticleId)">删除</button>
+      </div>
+    </div>
+  </div>
+</div>

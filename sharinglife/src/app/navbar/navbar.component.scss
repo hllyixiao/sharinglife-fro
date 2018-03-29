@@ -9,12 +9,11 @@ nav {
   };
   padding: 0;
   .nav-limit {
-    min-width: 768px;
+    min-width: 1000px;
     max-width: 1440px;
     margin: 0 auto;
   }
   .logo {
-    float: left;
     height: 56px;
     padding: 0;
     img {
@@ -77,11 +76,27 @@ nav {
         left: 40%;
         bottom: 100%;
       }
+      li {
+        a {
+          cursor: pointer;
+        }
+      }
     };
 
   }
+  .nav-center {
+    ul {
+      li {
+        a {
+          margin-top: 10px;
+          color: #666;
+        }
+      }
+    }
+  }
   .navbar-home-search {
       position: relative;
+      margin-top: 13px;
       input {
         @keyframes searchLength {
           from { width: 200px }
@@ -97,10 +112,11 @@ nav {
         animation: search 0.8s;
         animation-fill-mode: forwards;
         +a {
-          position: relative;
+          position: absolute;
           width: 25px;
           height: 25px;
-          right: 35px;
+          right: 6px;
+          top: -5px;
           color: #c1c5c4;
           cursor: pointer;
           text-align: center;
