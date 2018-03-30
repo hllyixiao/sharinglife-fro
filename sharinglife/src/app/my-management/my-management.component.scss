@@ -1,12 +1,33 @@
 .layout-main {
-  top: 50px;
+  top: 70px;
   width: 1000px;
   margin: auto;
   position: relative;
-  .section-title {
-    padding: 0 0 3px;
-    margin: 0 0 10px;
-    border-bottom: solid 1px #ddd;
+  .personal-info {
+    .img-avatar {
+      width: 150px;
+      height: 150px;
+    }
+    .info {
+      top: 70px;
+      .personal-header {
+        h1 {
+          font-size: xx-large;
+        }
+        button {
+          margin: 25px 80px 0 0;
+        }
+      }
+    }
+  }
+  .category {
+    position: relative;
+    margin-left: 0px;
+    top: 25px;
+  }
+  .handle {
+    position: relative;
+    top: 50px;
   }
   .article-item {
     margin: 6px 0 5px 0;

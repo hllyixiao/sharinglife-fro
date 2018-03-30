@@ -12,7 +12,7 @@
       <a class="btn log-in" routerLink="/login" role="button">登录</a>
     </div>
 
-    <div  class="btn-group navbar-avatar">
+    <div *ngIf="user" class="btn-group navbar-avatar">
       <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
       </button>
