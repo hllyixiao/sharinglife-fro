@@ -2,20 +2,26 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="article-item-list">
-          <div *ngFor="let item of draftList;" class="article-item" id="article-{{itemId}}">
-            <h2><a [routerLink]="['../edit/article', item.id]" target="_blank">{{ item.title }}</a></h2>
+          <div *ngFor="let item of draftList;" class="article-item" id="article-{{articleId}}">
+            <h2><a [routerLink]="['../edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
             <div class="item-content">
-              <img *ngIf="!!item.titleImg" [src]="item.titleImg">
-              {{item.contentTxt}}
+              <img *ngIf="!!item.firstImg" src="{{ this.envImgUrl + item.firstImg }}">
+              {{item.displayContextTxt}}
             </div>
             <div class="item-foot">
-              <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.id)">删除</a>
+              <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.articleId)">删除</a>
               <span class="operate-bull">•</span>
-              <a [routerLink]="['../edit/article', item.id]" target="_blank">编辑</a>
+              <a [routerLink]="['../edit/article', item.articleId]" target="_blank">编辑</a>
               <span class="operate-bull">•</span>
-              {{item.createTime}} 天前
+              {{item.displayUpdateTime}}
               <span class="operate-bull">•</span>
-              共 {{item.length}} 字
+              <i class="fa fa-thumbs-o-up"></i> {{item.displayLikes}}
+              <span class="operate-bull">•</span>
+              <i class="fa fa-comment-o"></i> {{item.displayComments}}
+              <span class="operate-bull">•</span>
+              <i class="fa fa-eye"></i> {{item.displayLikes}}
+              <span class="operate-bull">•</span>
+              共 {{item.displayContentSize}} 字
               <span class="operate-bull">•</span>
               文章
             </div>

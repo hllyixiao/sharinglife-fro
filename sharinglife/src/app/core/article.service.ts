@@ -22,29 +22,24 @@ export class ArticleService {
   }
 
   /**
-  * @根据用户Id查询所用该用户的文章草稿
-  */
-  getAllDraft(userId: number): Observable<any> {
-    return this.http.get('sl/api/article/getalldraft?userId=' + userId);
-  }
-
-  /**
   * @根据文章Id获取文章
   */
   getArticleById(articleId: number): Observable<any> {
     return this.http.get('/sl/api/article/getbyid/' + articleId);
   }
   /**
-  * @根据用户Id获取部分文章
+  * @根据用户Id, 文章status 获取部分文章
   */
-  draftchunk(chunkInfo): Observable<any> {
-    return this.http.post('sl/api/article/draftchunk', chunkInfo);
+ getbyuserid(chunkInfo): Observable<any> {
+    const url = `sl/api/article/getbyuserid?limit=${chunkInfo.limit}
+      &page=${chunkInfo.page}&status=${chunkInfo.status}&userId=${chunkInfo.userId}`;
+    return this.http.get(url);
   }
 
   /**
   * @根据文章Id刪除文章
   */
   deleteArticleById(articleId: number): Observable<any> {
-    return this.http.get('sl/api/article/deletearticlebyid?articleId=' + articleId);
+    return this.http.get('sl/api/article/deletebyid?articleId=' + articleId);
   }
 }
