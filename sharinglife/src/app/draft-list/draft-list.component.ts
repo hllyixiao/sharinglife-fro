@@ -40,7 +40,7 @@ export class DraftListComponent implements OnInit {
 
   ngOnInit() {
     this.initReqInfo();
-    this.articleReqObj.userId = 2;// this.userService.user.id;
+    this.articleReqObj.userId = this.userService.user.id;
     this.articleService.getbyuserid(this.articleReqObj).subscribe(
       resp => {
         this.dispalyList = resp.datas;
@@ -51,8 +51,8 @@ export class DraftListComponent implements OnInit {
   }
 
 
- initReqInfo(){
-  const currentUrl= location.href;
+ initReqInfo() {
+  const currentUrl = location.href;
 
   if (_.endsWith(currentUrl, 'article/published')) {
     this.category = 1;
@@ -107,7 +107,7 @@ export class DraftListComponent implements OnInit {
  }
 
  deleteArticle(articleId: number) {
-  this.articleService.deleteArticleById(articleId).subscribe(
+  this.articleService.deleteArticleByIds([articleId]).subscribe(
       req => {
         this.deleteArticleModal.hide();
         this.articleService.getbyuserid(this.articleReqObj).subscribe(

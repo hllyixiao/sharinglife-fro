@@ -21,7 +21,7 @@ const appRoutes: Routes = [
   { path: 'creation', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'edit/article/:articleId', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'management/:userId',
-    component: MyManagementComponent,// , canActivate: [AuthGuardService] },
+    component: MyManagementComponent, // , canActivate: [AuthGuardService] },
     children: [
     { path: 'article/published', component: DraftListComponent},
     { path: 'article/draft', component: DraftListComponent},

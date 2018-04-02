@@ -39,7 +39,7 @@ export class ArticleService {
   /**
   * @根据文章Id刪除文章
   */
-  deleteArticleById(articleId: number): Observable<any> {
-    return this.http.get('sl/api/article/deletebyid?articleId=' + articleId);
+  deleteArticleByIds(articleIds: Array<number>): Observable<any> {
+    return this.http.post('sl/api/article/deletebyids', articleIds);
   }
 }
