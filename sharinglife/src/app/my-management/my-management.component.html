@@ -14,22 +14,36 @@
     </div>
   </div>
   <div class="row category">
-      <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">文章</a></li>
-        <li role="presentation"><a href="#">图片</a></li>
-        <li role="presentation"><a href="#">视频</a></li>
-      </ul>
+    <div class="col-xs-8 category-navbar">
+      <div class="btn-group" (mouseenter)="showArticleNav = true" (mouseleave)="showArticleNav = false" [ngClass]="{'open': showArticleNav}">
+        <button class="btn btn-default btn-lg btn-navbar" type="button">文章</button>
+        <ul class="dropdown-menu" (click)="showArticleNav = false">
+          <li><a routerLink="./article/published">已发布</a></li>
+          <li><a routerLink="./article/draft">草稿</a></li>
+          <li><a routerLink="./article/recycle">回收站</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" (mouseenter)="showImageNav = true" (mouseleave)="showImageNav = false" [ngClass]="{'open': showImageNav}">
+        <button class="btn btn-default btn-lg btn-navbar" type="button">图片</button>
+        <ul class="dropdown-menu" (click)="showImageNav = false">
+          <li><a routerLink="./image/published">已发布</a></li>
+          <li><a routerLink="./image/draft">草稿</a></li>
+          <li><a routerLink="./image/recycle">回收站</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" (mouseenter)="showVideoNav = true" (mouseleave)="showVideoNav = false" [ngClass]="{'open': showVideoNav}">
+        <button class="btn btn-default btn-lg btn-navbar" type="button">视频</button>
+        <ul class="dropdown-menu" (click)="showVideoNav = false">
+          <li><a routerLink="./video/published">已发布</a></li>
+          <li><a routerLink="./video/draft">草稿</a></li>
+          <li><a routerLink="./video/recycle">回收站</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="row handle">
     <div class="col-xs-8">
-      <div class="nav-dev">
-          <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">已发布</a></li>
-            <li role="presentation"><a href="#">草稿</a></li>
-            <li role="presentation"><a href="#">回收站</a></li>
-          </ul>
-      </div>
-      <app-draft-list></app-draft-list>
+      <router-outlet></router-outlet>
     </div>
     <div class="col-xs-4">
       右边部分

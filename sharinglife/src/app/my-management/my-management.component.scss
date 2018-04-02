@@ -24,6 +24,34 @@
     position: relative;
     margin-left: 0px;
     top: 25px;
+    .category-navbar {
+      padding-left: 0px;
+      border-bottom: 1px solid #e9e6e6;
+      .btn-group {
+        .dropdown-menu {
+          top: 94%;
+          min-width: 130px;
+        }
+      }
+    }
+    .btn-navbar {
+      color: #b2aeae;
+      width: 120px;
+      border: none;
+      border-bottom: 2px solid #fff;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      font-weight: 600;
+      &:hover {
+        color: #2b2727;
+        background-color: #fff;
+        border-bottom: 2px solid #b2aeae;
+      }
+      &:focus {
+        outline: none;
+        background-color: #fff;
+      }
+    }
   }
   .handle {
     position: relative;

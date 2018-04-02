@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="article-item-list">
-          <div *ngFor="let item of draftList;" class="article-item" id="article-{{articleId}}">
+          <div *ngFor="let item of dispalyList;" class="article-item" id="article-{{articleId}}">
             <h2><a [routerLink]="['../edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
             <div class="item-content">
               <img *ngIf="!!item.firstImg" src="{{ this.envImgUrl + item.firstImg }}">
@@ -35,7 +35,7 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">删除草稿</h4>
+        <h4 class="modal-title pull-left">删除</h4>
         <button type="button" class="close pull-right" (click)="deleteArticleModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

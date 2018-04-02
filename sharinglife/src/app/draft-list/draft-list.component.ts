@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -24,27 +25,69 @@ export class DraftListComponent implements OnInit {
     limit: 3,
     userId: -1
   };
-  public draftList = [];
+  public dispalyList = [];
+  public category = 1; // 1: 文章 2: 图片 3: 视频
   public pages = 0;
 
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
 
   constructor(
     private articleService: ArticleService,
+    private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
     private elef: ElementRef) { }
 
   ngOnInit() {
-    this.articleReqObj.userId = this.userService.user.id; // this.userService.user.id
+    this.initReqInfo();
+    this.articleReqObj.userId = 2;// this.userService.user.id;
     this.articleService.getbyuserid(this.articleReqObj).subscribe(
       resp => {
-        this.draftList = _.concat(this.draftList, resp.datas);
+        this.dispalyList = resp.datas;
         this.pages = resp.pages;
       }
     );
     this.scrollLoad();
   }
 
+
+ initReqInfo(){
+  const currentUrl= location.href;
+
+  if (_.endsWith(currentUrl, 'article/published')) {
+    this.category = 1;
+    this.articleReqObj.status = 2;
+  }
+  if (_.endsWith(currentUrl, 'article/draft')) {
+    this.category = 1;
+    this.articleReqObj.status = 1;
+  }
+  if (_.endsWith(currentUrl, 'article/recycle')) {
+    this.category = 1;
+    this.articleReqObj.status = 0;
+  }
+  if (_.endsWith(currentUrl, 'image/published')) {
+    this.category = 2;
+    this.articleReqObj.status = 2;
+  }
+  if (_.endsWith(currentUrl, 'image/draft')) {
+    this.category = 2;
+    this.articleReqObj.status = 1;
+  }
+  if (_.endsWith(currentUrl, 'image/recycle')) {
+    this.category = 2;
+    this.articleReqObj.status = 0;
+  }if (_.endsWith(currentUrl, 'video/published')) {
+    this.category = 3;
+    this.articleReqObj.status = 2;
+  }if (_.endsWith(currentUrl, 'video/draft')) {
+    this.category = 3;
+    this.articleReqObj.status = 1;
+  }if (_.endsWith(currentUrl, 'video/recycle')) {
+    this.category = 3;
+    this.articleReqObj.status = 0;
+  }
+ }
  scrollLoad() {
     // throttleTime 发出第一个值，忽略等待时间内发出的值，等待时间过后再发出新值
     Observable.fromEvent(window, 'scroll').throttleTime(1500).subscribe(
@@ -57,7 +100,7 @@ export class DraftListComponent implements OnInit {
         if (srcollBottom < 800 && this.articleReqObj.page < this.pages) {
           this.articleReqObj.page = this.articleReqObj.page + 1;
           this.articleService.getbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
-            resp => this.draftList = _.concat(this.draftList, resp.datas)
+            resp => this.dispalyList = _.concat(this.dispalyList, resp.datas)
           );
         }
     });
@@ -67,10 +110,9 @@ export class DraftListComponent implements OnInit {
   this.articleService.deleteArticleById(articleId).subscribe(
       req => {
         this.deleteArticleModal.hide();
-        this.draftList = [];
         this.articleService.getbyuserid(this.articleReqObj).subscribe(
           resp => {
-            this.draftList = _.concat(this.draftList, resp.datas);
+            this.dispalyList = resp.datas;
             this.pages = resp.pages;
           }
         );
