@@ -25,7 +25,20 @@ export class DraftListComponent implements OnInit {
     limit: 3,
     userId: -1
   };
-  public dispalyList = [];
+  public dispalyList = [
+  {
+    articleId: 1209,
+    title: '我们的世界',
+    displayContextTxt: `“老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
+    displayUpdateTime: '1小时前',
+    firstImg: '/assets/img/show.jpg'
+    },
+  {
+    articleId: 1233,
+    title: '如此美丽',
+    displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
+    displayUpdateTime: '2018-04-04'
+  }];
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public pages = 0;
 
@@ -40,7 +53,7 @@ export class DraftListComponent implements OnInit {
 
   ngOnInit() {
     this.initReqInfo();
-    this.articleReqObj.userId = this.userService.user.id;
+    this.articleReqObj.userId = 3;// this.userService.user.id;
     this.articleService.getbyuserid(this.articleReqObj).subscribe(
       resp => {
         this.dispalyList = resp.datas;

@@ -2,24 +2,37 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="article-item-list">
-          <div *ngFor="let item of dispalyList;" class="article-item" id="article-{{articleId}}">
-            <h2><a [routerLink]="['../edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
+          <div *ngFor="let item of dispalyList;" class="article-item" id="article-{{item.articleId}}">
+            <div class="author">
+              <a class="avatar" target="_blank" routerLink="">
+                <img src="/assets/img/authorImg.png">
+              </a>
+              <div class="info">
+                  <a class="nickName" target="_blank" routerLink="">作者昵称</a>
+                  <span class="time">{{item.displayUpdateTime}}</span>
+              </div>
+            </div>
             <div class="item-content">
-              <img *ngIf="!!item.firstImg" src="{{ this.envImgUrl + item.firstImg }}">
-              {{item.displayContextTxt}}
+              <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
+                <h2 class="title"><a [routerLink]="['../edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
+                <p>{{item.displayContextTxt }}</p>
+              </div>
+              <div *ngIf="!!item.firstImg" class="img">
+                <a class="" target="_blank" routerLink="">
+                  <img src="{{item.firstImg }}">
+                </a>
+              </div>
             </div>
             <div class="item-foot">
               <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.articleId)">删除</a>
               <span class="operate-bull">•</span>
               <a [routerLink]="['../edit/article', item.articleId]" target="_blank">编辑</a>
               <span class="operate-bull">•</span>
-              {{item.displayUpdateTime}}
+              <i class="fa fa-eye"></i> {{item.displayLikes}}
               <span class="operate-bull">•</span>
               <i class="fa fa-thumbs-o-up"></i> {{item.displayLikes}}
               <span class="operate-bull">•</span>
               <i class="fa fa-comment-o"></i> {{item.displayComments}}
-              <span class="operate-bull">•</span>
-              <i class="fa fa-eye"></i> {{item.displayLikes}}
               <span class="operate-bull">•</span>
               共 {{item.displayContentSize}} 字
               <span class="operate-bull">•</span>

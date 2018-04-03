@@ -20,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'creation', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'edit/article/:articleId', component: CreationComponent}, // , canActivate: [AuthGuardService] },
+  { path: 'draftlist', component: DraftListComponent},
   { path: 'management/:userId',
     component: MyManagementComponent, // , canActivate: [AuthGuardService] },
     children: [
