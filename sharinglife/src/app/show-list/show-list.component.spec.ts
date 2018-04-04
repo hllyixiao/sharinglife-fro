@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DraftListComponent } from './draft-list.component';
+import { ShowListComponent } from './show-list.component';
 
-describe('DraftListComponent', () => {
+describe('ShowListComponent', () => {
   let component: DraftListComponent;
   let fixture: ComponentFixture<DraftListComponent>;
 

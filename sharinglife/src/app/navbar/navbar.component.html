@@ -17,8 +17,8 @@
         <img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
       </button>
       <ul class="dropdown-menu">
-        <!--<li><a [routerLink]="['/management', 42]"><i class="fa fa-user-secret"></i> 个人主页</a></li>-->
-        <li><a [routerLink]="['/management', user.id]"><i class="fa fa-user-secret"></i> 个人主页</a></li>
+        <!--<li><a [routerLink]="['/management', 42] [queryParams]="{username: 'true'}"><i class="fa fa-user-secret"></i> 个人主页</a></li>-->
+        <li><a [routerLink]="['/management', user.id, 'article', 'published']"><i class="fa fa-user-secret"></i> 个人主页</a></li>
         <li><a href="#">Another action</a></li>
         <li><a href="#">Something else here</a></li>
         <li><a href="#">Separated link</a></li>

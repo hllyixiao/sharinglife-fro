@@ -3,6 +3,9 @@
   width: 666px;
   margin: auto;
   position: relative;
+  .type {
+    margin-bottom: 20px;
+  }
   .article-item {
     margin: 6px 0 5px 0;
     a {
@@ -87,6 +90,14 @@
       border-top: 1px solid #eee;
     }
   }
+  .over {
+    cursor: pointer;
+    line-height: 40px;
+    margin-top: 25px;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #74add3;
+}
 }
 
 .delete-article-modal-footer {

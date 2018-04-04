@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // component
 import { CreationComponent } from '../creation/creation.component';
-import { DraftListComponent } from '../draft-list/draft-list.component';
+import { ShowListComponent } from '../show-list/show-list.component';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
@@ -20,19 +20,19 @@ const appRoutes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'creation', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'edit/article/:articleId', component: CreationComponent}, // , canActivate: [AuthGuardService] },
-  { path: 'draftlist', component: DraftListComponent},
+  { path: 'draftlist', component: ShowListComponent},
   { path: 'management/:userId',
     component: MyManagementComponent, // , canActivate: [AuthGuardService] },
     children: [
-    { path: 'article/published', component: DraftListComponent},
-    { path: 'article/draft', component: DraftListComponent},
-    { path: 'article/recycle', component: DraftListComponent},
-    { path: 'image/published', component: DraftListComponent},
-    { path: 'image/draft', component: DraftListComponent},
-    { path: 'image/recycle', component: DraftListComponent},
-    { path: 'video/published', component: DraftListComponent},
-    { path: 'video/draft', component: DraftListComponent},
-    { path: 'video/recycle', component: DraftListComponent},
+    { path: 'article/published', component: ShowListComponent},
+    { path: 'article/draft', component: ShowListComponent},
+    { path: 'article/recycle', component: ShowListComponent},
+    { path: 'image/published', component: ShowListComponent},
+    { path: 'image/draft', component: ShowListComponent},
+    { path: 'image/recycle', component: ShowListComponent},
+    { path: 'video/published', component: ShowListComponent},
+    { path: 'video/draft', component: ShowListComponent},
+    { path: 'video/recycle', component: ShowListComponent},
     ]},
   // 当URL为空时就会访问那里
   { path: '' , redirectTo: '/home', pathMatch: 'full'},

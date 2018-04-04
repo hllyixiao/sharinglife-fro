@@ -1,0 +1,67 @@
+<div class="layout-main">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="article-item-list">
+        <div class="type"><span>{{ showCategoryTxt }}: </span><span>{{ showStatusTxt }}</span></div>
+        <div *ngFor="let item of dispalyList;" class="article-item" id="article-{{item.articleId}}">
+          <div class="author">
+            <a class="avatar" target="_blank" routerLink="">
+              <img src="/assets/img/authorImg.png">
+            </a>
+            <div class="info">
+                <a class="nickName" target="_blank" routerLink="">作者昵称</a>
+                <span class="time">{{item.displayUpdateTime}}</span>
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
+              <h2 class="title"><a [routerLink]="['../edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
+              <p>{{item.displayContextTxt }}</p>
+            </div>
+            <div *ngIf="!!item.firstImg" class="img">
+              <a class="" target="_blank" routerLink="">
+                <img src="{{item.firstImg }}">
+              </a>
+            </div>
+          </div>
+          <div class="item-foot">
+            <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.articleId)">删除</a>
+            <span class="operate-bull">•</span>
+            <a [routerLink]="['../edit/article', item.articleId]" target="_blank">编辑</a>
+            <span class="operate-bull">•</span>
+            <i class="fa fa-eye"></i> {{item.displayLikes}}
+            <span class="operate-bull">•</span>
+            <i class="fa fa-thumbs-o-up"></i> {{item.displayLikes}}
+            <span class="operate-bull">•</span>
+            <i class="fa fa-comment-o"></i> {{item.displayComments}}
+            <span class="operate-bull">•</span>
+            共 {{item.displayContentSize}} 字
+            <span class="operate-bull">•</span>
+            文章
+          </div>
+        </div>
+      </div>
+      <div class="over" [ngClass]="{'hidden': this.hasDataLoad}">已加载完，敬请期待...</div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div bsModal #deleteArticleModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteArtilceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">删除</h4>
+        <button type="button" class="close pull-right" (click)="deleteArticleModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>确定删除该文章吗？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteArticleModal.hide()">取消</button>
+        <button type="button" class="btn btn-primary" (click)="deleteArticle(deleteArticleId)">删除</button>
+      </div>
+    </div>
+  </div>
+</div>

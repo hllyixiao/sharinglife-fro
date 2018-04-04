@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, ParamMap } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -12,13 +12,14 @@ import { Article } from '../_models/article';
 import { environment as env} from '../../environments/environment';
 
 @Component({
-  selector: 'app-draft-list',
-  templateUrl: './draft-list.component.html',
-  styleUrls: ['./draft-list.component.scss']
+  selector: 'app-show-list',
+  templateUrl: './show-list.component.html',
+  styleUrls: ['./show-list.component.scss']
 })
-export class DraftListComponent implements OnInit {
+export class ShowListComponent implements OnInit {
   public deleteArticleId: number;
   public envImgUrl = env.imgUrl;
+  public hasDataLoad = true;
   public articleReqObj = {
     status: 2, // 0:删除 , 1:草稿,  2: 发布
     page: 1,
@@ -40,6 +41,8 @@ export class DraftListComponent implements OnInit {
     displayUpdateTime: '2018-04-04'
   }];
   public category = 1; // 1: 文章 2: 图片 3: 视频
+  public showCategoryTxt = '文章';
+  public showStatusTxt = '已发布';
   public pages = 0;
 
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
@@ -52,17 +55,25 @@ export class DraftListComponent implements OnInit {
     private elef: ElementRef) { }
 
   ngOnInit() {
-    this.initReqInfo();
+    this.routeChange();
     this.articleReqObj.userId = 3;// this.userService.user.id;
-    this.articleService.getbyuserid(this.articleReqObj).subscribe(
-      resp => {
-        this.dispalyList = resp.datas;
-        this.pages = resp.pages;
-      }
-    );
-    this.scrollLoad();
+
   }
 
+  routeChange() {
+    this.router.events.subscribe(event => {
+      if ( event instanceof NavigationEnd ) {
+        this.initReqInfo();
+        this.articleService.getbyuserid(this.articleReqObj).subscribe(
+          resp => {
+            this.dispalyList = resp.datas;
+            this.pages = resp.pages;
+          }
+        );
+        this.scrollLoad();
+      }
+    });
+}
 
  initReqInfo() {
   const currentUrl = location.href;
@@ -70,35 +81,56 @@ export class DraftListComponent implements OnInit {
   if (_.endsWith(currentUrl, 'article/published')) {
     this.category = 1;
     this.articleReqObj.status = 2;
+    this.showCategoryTxt = '文章';
+    this.showStatusTxt = '已发布';
   }
   if (_.endsWith(currentUrl, 'article/draft')) {
     this.category = 1;
     this.articleReqObj.status = 1;
+    this.showCategoryTxt = '文章';
+    this.showStatusTxt = '草稿';
   }
   if (_.endsWith(currentUrl, 'article/recycle')) {
     this.category = 1;
     this.articleReqObj.status = 0;
+    this.showCategoryTxt = '文章';
+    this.showStatusTxt = '回收站';
   }
   if (_.endsWith(currentUrl, 'image/published')) {
     this.category = 2;
     this.articleReqObj.status = 2;
+    this.showCategoryTxt = '图片';
+    this.showStatusTxt = '已发布';
   }
   if (_.endsWith(currentUrl, 'image/draft')) {
     this.category = 2;
     this.articleReqObj.status = 1;
+    this.showCategoryTxt = '图片';
+    this.showStatusTxt = '草稿';
   }
   if (_.endsWith(currentUrl, 'image/recycle')) {
     this.category = 2;
     this.articleReqObj.status = 0;
-  }if (_.endsWith(currentUrl, 'video/published')) {
+    this.showCategoryTxt = '图片';
+    this.showStatusTxt = '回收站';
+  }
+  if (_.endsWith(currentUrl, 'video/published')) {
     this.category = 3;
     this.articleReqObj.status = 2;
-  }if (_.endsWith(currentUrl, 'video/draft')) {
+    this.showCategoryTxt = '视频';
+    this.showStatusTxt = '已发布';
+  }
+  if (_.endsWith(currentUrl, 'video/draft')) {
     this.category = 3;
     this.articleReqObj.status = 1;
-  }if (_.endsWith(currentUrl, 'video/recycle')) {
+    this.showCategoryTxt = '视频';
+    this.showStatusTxt = '草稿';
+  }
+  if (_.endsWith(currentUrl, 'video/recycle')) {
     this.category = 3;
     this.articleReqObj.status = 0;
+    this.showCategoryTxt = '视频';
+    this.showStatusTxt = '回收站';
   }
  }
  scrollLoad() {
@@ -115,6 +147,9 @@ export class DraftListComponent implements OnInit {
           this.articleService.getbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
             resp => this.dispalyList = _.concat(this.dispalyList, resp.datas)
           );
+        }
+        if(this.pages === this.articleReqObj.page ) {
+          this.hasDataLoad = false;
         }
     });
  }
