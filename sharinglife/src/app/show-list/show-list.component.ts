@@ -43,6 +43,7 @@ export class ShowListComponent implements OnInit {
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public showCategoryTxt = '文章';
   public showStatusTxt = '已发布';
+  public user;
   public pages = 0;
 
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
@@ -55,9 +56,9 @@ export class ShowListComponent implements OnInit {
     private elef: ElementRef) { }
 
   ngOnInit() {
+    this.articleReqObj.userId = this.userService.user.id;
+    this.user = this.userService.user;
     this.routeChange();
-    this.articleReqObj.userId = 3;// this.userService.user.id;
-
   }
 
   routeChange() {
@@ -148,7 +149,7 @@ export class ShowListComponent implements OnInit {
             resp => this.dispalyList = _.concat(this.dispalyList, resp.datas)
           );
         }
-        if(this.pages === this.articleReqObj.page ) {
+        if (this.pages === this.articleReqObj.page ) {
           this.hasDataLoad = false;
         }
     });
