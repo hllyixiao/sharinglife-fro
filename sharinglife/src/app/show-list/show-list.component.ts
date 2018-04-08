@@ -30,7 +30,7 @@ export class ShowListComponent implements OnInit {
   {
     articleId: 1209,
     title: '我们的世界',
-    displayContextTxt: `“老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
+    displayContextTxt: `老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
     displayUpdateTime: '1小时前',
     firstImg: '/assets/img/show.jpg'
     },
@@ -56,25 +56,30 @@ export class ShowListComponent implements OnInit {
     private elef: ElementRef) { }
 
   ngOnInit() {
-    this.articleReqObj.userId = this.userService.user.id;
+    this.articleReqObj.userId = 2; // TODO this.userService.user.id;
     this.user = this.userService.user;
+    this.articleList();
     this.routeChange();
+    this.scrollLoad();
   }
 
   routeChange() {
     this.router.events.subscribe(event => {
       if ( event instanceof NavigationEnd ) {
         this.initReqInfo();
-        this.articleService.getbyuserid(this.articleReqObj).subscribe(
-          resp => {
-            this.dispalyList = resp.datas;
-            this.pages = resp.pages;
-          }
-        );
-        this.scrollLoad();
+        this.articleList();
       }
     });
-}
+  }
+
+  articleList() {
+    this.articleService.getbyuserid(this.articleReqObj).subscribe(
+      resp => {
+        this.dispalyList = resp.datas;
+        this.pages = resp.pages;
+      }
+    );
+  }
 
  initReqInfo() {
   const currentUrl = location.href;
@@ -159,12 +164,7 @@ export class ShowListComponent implements OnInit {
   this.articleService.deleteArticleByIds([articleId]).subscribe(
       req => {
         this.deleteArticleModal.hide();
-        this.articleService.getbyuserid(this.articleReqObj).subscribe(
-          resp => {
-            this.dispalyList = resp.datas;
-            this.pages = resp.pages;
-          }
-        );
+        this.articleList();
       },
       err => console.log(err)
    );

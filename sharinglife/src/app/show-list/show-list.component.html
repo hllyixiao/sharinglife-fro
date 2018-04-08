@@ -6,22 +6,25 @@
         <div *ngFor="let item of dispalyList;" class="article-item" id="article-{{item.articleId}}">
           <div class="author">
             <a class="avatar" target="_blank" routerLink="../article/published">
-              <!--<img src="/assets/img/authorImg.png">-->
-              <img src="{{ envImgUrl + user.avatarUrl }}">
+              <img src="/assets/img/authorImg.png">
+              <!--<img src="{{ envImgUrl + user.avatarUrl }}">-->
             </a>
             <div class="info">
-                <a class="nickName" target="_blank" routerLink="">{{ user.name }}</a>
+               <a class="nickName" target="_blank" routerLink="">username</a>
+                <!--<a class="nickName" target="_blank" routerLink="">{{ user.name }}</a>-->
                 <span class="time">{{item.displayUpdateTime}}</span>
             </div>
           </div>
           <div class="item-content">
             <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
               <h2 class="title"><a [routerLink]="['/edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
-              <p>{{item.displayContextTxt }}</p>
+              <p *ngIf="!!item.firstImg">{{ item.displayContextTxt | omit: 100}}</p>
+              <p *ngIf="!item.firstImg">{{ item.displayContextTxt | omit: 120}}</p>
             </div>
             <div *ngIf="!!item.firstImg" class="img">
               <a class="" target="_blank" [routerLink]="['/edit/article', item.articleId]">
-                <img src="{{ envImgUrl + item.firstImg }}">
+                <img src="{{ item.firstImg }}">
+                <!--<img src="{{ envImgUrl + item.firstImg }}">-->
               </a>
             </div>
           </div>
