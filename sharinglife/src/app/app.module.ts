@@ -19,6 +19,8 @@ import { ShowListComponent } from './show-list/show-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MyManagementComponent } from './my-management/my-management.component';
 
+import { ImageCropperComponent } from 'ng2-img-cropper';
+
 @NgModule({
   imports: [
     AppBootstrapModule,
@@ -40,6 +42,7 @@ import { MyManagementComponent } from './my-management/my-management.component';
     ShowListComponent,
     NavbarComponent,
     MyManagementComponent,
+    ImageCropperComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

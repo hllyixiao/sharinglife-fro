@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, ParamMap } from '@angular/router';
+import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -16,7 +17,7 @@ import { environment as env} from '../../environments/environment';
   templateUrl: './show-list.component.html',
   styleUrls: ['./show-list.component.scss']
 })
-export class ShowListComponent implements OnInit {
+export class ShowListComponent implements OnInit, AfterViewInit {
   public deleteArticleId: number;
   public envImgUrl = env.imgUrl;
   public hasDataLoad = true;
@@ -32,13 +33,23 @@ export class ShowListComponent implements OnInit {
     title: '我们的世界',
     displayContextTxt: `老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
     displayUpdateTime: '1小时前',
-    firstImg: '/assets/img/show.jpg'
+    firstImg: '/assets/img/show.jpg',
+    imgData: {'img': '/assets/img/show.jpg'},
     },
   {
     articleId: 1233,
     title: '如此美丽',
     displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
-    displayUpdateTime: '2018-04-04'
+    displayUpdateTime: '2018-04-04',
+    firstImg: '/assets/img/show.jpg',
+    imgData: {'img': '/assets/img/show.jpg'},
+  },{
+    articleId: 1233,
+    title: '如此美丽',
+    displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
+    displayUpdateTime: '2018-04-04',
+    firstImg: '/assets/img/show.jpg',
+    imgData: {'img': '/assets/img/code.png'},
   }];
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public showCategoryTxt = '文章';
@@ -46,21 +57,38 @@ export class ShowListComponent implements OnInit {
   public user;
   public pages = 0;
 
+    cropperSettings: CropperSettings;
+    croppedHeight = 120;
+    croppedWidth = 150;
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
-
+  @ViewChildren(ImageCropperComponent) cropperList: QueryList<ImageCropperComponent>;
   constructor(
     private articleService: ArticleService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private elef: ElementRef) { }
+    private elef: ElementRef) {}
 
   ngOnInit() {
+
+
     this.articleReqObj.userId = 2; // TODO this.userService.user.id;
     this.user = this.userService.user;
+    this.cropperSettingsInit();
     this.articleList();
     this.routeChange();
     this.scrollLoad();
+  }
+
+  cropperSettingsInit(){
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 150;
+    this.cropperSettings.height = 120;
+    this.cropperSettings.croppedWidth = 100;
+    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.canvasWidth = 400;
+    this.cropperSettings.canvasHeight = 400;
+    this.cropperSettings.noFileInput = true;
   }
 
   routeChange() {
@@ -173,5 +201,17 @@ export class ShowListComponent implements OnInit {
  showDeleteModal(articleId: number) {
   this.deleteArticleId = articleId;
   this.deleteArticleModal.show();
+ }
+
+ ngAfterViewInit(){
+  this.cropperList.forEach(function(cropper, index){
+    const image:any = new Image();
+    image.crossOrigin = "Anonymous";
+    image.src = cropper.image.img;
+    const that = this;
+    image.onload = function(){
+      cropper.setImage(image)
+    }
+  });
  }
 }

@@ -22,9 +22,9 @@
               <p *ngIf="!item.firstImg">{{ item.displayContextTxt | omit: 120}}</p>
             </div>
             <div *ngIf="!!item.firstImg" class="img">
+              <img-cropper class="hidden" [image]="item.imgData" [settings]="cropperSettings"></img-cropper>
               <a class="" target="_blank" [routerLink]="['/edit/article', item.articleId]">
-                <img src="{{ item.firstImg }}">
-                <!--<img src="{{ envImgUrl + item.firstImg }}">-->
+                <img [src]="item.imgData.image">
               </a>
             </div>
           </div>
