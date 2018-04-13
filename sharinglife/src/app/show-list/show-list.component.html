@@ -23,8 +23,8 @@
             </div>
             <div *ngIf="!!item.firstImg" class="img">
               <img-cropper class="hidden" [image]="item.imgData" [settings]="cropperSettings"></img-cropper>
-              <a class="" target="_blank" [routerLink]="['/edit/article', item.articleId]">
-                <img [src]="item.imgData.image">
+              <a target="_blank" [routerLink]="['/edit/article', item.articleId]">
+                <img *ngIf="!!item.imgData.image" [src]="item.imgData.image">
               </a>
             </div>
           </div>

@@ -34,7 +34,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     displayContextTxt: `老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
     displayUpdateTime: '1小时前',
     firstImg: '/assets/img/show.jpg',
-    imgData: {'img': '/assets/img/show.jpg'},
+    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
     },
   {
     articleId: 1233,
@@ -42,24 +42,22 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
     displayUpdateTime: '2018-04-04',
     firstImg: '/assets/img/show.jpg',
-    imgData: {'img': '/assets/img/show.jpg'},
+    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
   },{
     articleId: 1233,
     title: '如此美丽',
     displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
     displayUpdateTime: '2018-04-04',
     firstImg: '/assets/img/show.jpg',
-    imgData: {'img': '/assets/img/code.png'},
+    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
   }];
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public showCategoryTxt = '文章';
   public showStatusTxt = '已发布';
-  public user;
   public pages = 0;
+  public user;
+  public cropperSettings: CropperSettings;
 
-    cropperSettings: CropperSettings;
-    croppedHeight = 120;
-    croppedWidth = 150;
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
   @ViewChildren(ImageCropperComponent) cropperList: QueryList<ImageCropperComponent>;
   constructor(
@@ -70,9 +68,6 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     private elef: ElementRef) {}
 
   ngOnInit() {
-
-
-    this.articleReqObj.userId = 2; // TODO this.userService.user.id;
     this.user = this.userService.user;
     this.cropperSettingsInit();
     this.articleList();
@@ -103,6 +98,11 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   articleList() {
     this.articleService.getbyuserid(this.articleReqObj).subscribe(
       resp => {
+        _.forEach(this.dispalyList, function(acticle){
+          if (acticle.firstImg !== ''){
+            acticle['imgData']['img'] = this.envImgUrl + acticle.firstImg;
+          }
+        });
         this.dispalyList = resp.datas;
         this.pages = resp.pages;
       }
@@ -179,7 +179,15 @@ export class ShowListComponent implements OnInit, AfterViewInit {
         if (srcollBottom < 800 && this.articleReqObj.page < this.pages) {
           this.articleReqObj.page = this.articleReqObj.page + 1;
           this.articleService.getbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
-            resp => this.dispalyList = _.concat(this.dispalyList, resp.datas)
+            resp => {
+              _.forEach(this.dispalyList, function(acticle){
+                if (acticle.firstImg !== ''){
+                  acticle['imgData']['img'] = this.envImgUrl + acticle.firstImg;
+                }
+              });
+              this.dispalyList = _.concat(this.dispalyList, resp.datas);
+              this.ngAfterViewInit();
+            }
           );
         }
         if (this.pages === this.articleReqObj.page ) {

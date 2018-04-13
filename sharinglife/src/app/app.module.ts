@@ -20,6 +20,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MyManagementComponent } from './my-management/my-management.component';
 
 import { ImageCropperComponent } from 'ng2-img-cropper';
+import { PersonalInformationComponent } from './personal-information/personal-information.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
     ShowListComponent,
     NavbarComponent,
     MyManagementComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    PersonalInformationComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
