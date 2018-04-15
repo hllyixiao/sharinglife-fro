@@ -30,9 +30,9 @@ export class ArticleService {
   /**
   * @根据用户Id, 文章status 获取部分文章
   */
- getbyuserid(chunkInfo): Observable<any> {
-    const url = `sl/api/article/getbyuserid?limit=${chunkInfo.limit}
-      &page=${chunkInfo.page}&status=${chunkInfo.status}&userId=${chunkInfo.userId}`;
+ listbyuserid(chunkInfo): Observable<any> {
+    const url = `/sl/api/article/listbyuserid?limit=${chunkInfo.limit}
+      &page=${chunkInfo.page}&status=${chunkInfo.status}`;
     return this.http.get(url);
   }
 
@@ -41,5 +41,19 @@ export class ArticleService {
   */
   deleteArticleByIds(articleIds: Array<number>): Observable<any> {
     return this.http.post('sl/api/article/deletebyids', articleIds);
+  }
+
+   /**
+    * @设置用户头像
+    */
+   setavatar(avatar: FormData): Observable<any> {
+    return this.http.post('sl/api/user/setavatar', avatar);
+  }
+
+  /**
+   * @更新用户基本信息
+   */
+  updateUser(user): Observable<any> {
+    return this.http.post('sl/api/user/update', user);
   }
 }

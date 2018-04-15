@@ -4,18 +4,47 @@
   margin: auto;
   position: relative;
   .personal-info {
+    .img {
+      padding: 0px;
+    }
     .img-avatar {
       width: 150px;
       height: 150px;
     }
     .info {
-      top: 70px;
+      top: 50px;
       .personal-header {
-        h1 {
+        .name {
           font-size: xx-large;
+          font-weight: 700;
+        }
+        .motto {
+          color: #e56666;
+          margin-left: 10px;
         }
         button {
-          margin: 25px 80px 0 0;
+          margin: 34px 80px 0 0;
+        }
+      }
+      .info {
+        ul {
+          li {
+            display: inline-block;
+            border-right: 1px solid #eee;
+            line-height: 20px;
+            padding: 1px 15px 1px 5px;
+            a {
+              color: #b2aeae;
+              &:hover, &:focus {
+                color: #787777;
+                text-decoration: none;
+              }
+              p {
+                color: #555;
+                margin: 0px
+              }
+            }
+          }
         }
       }
     }

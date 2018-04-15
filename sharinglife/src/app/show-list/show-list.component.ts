@@ -24,8 +24,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   public articleReqObj = {
     status: 2, // 0:删除 , 1:草稿,  2: 发布
     page: 1,
-    limit: 3,
-    userId: -1
+    limit: 3
   };
   public dispalyList = [
   {
@@ -35,7 +34,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     displayUpdateTime: '1小时前',
     firstImg: '/assets/img/show.jpg',
     imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
-    },
+  },
   {
     articleId: 1233,
     title: '如此美丽',
@@ -43,7 +42,8 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     displayUpdateTime: '2018-04-04',
     firstImg: '/assets/img/show.jpg',
     imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
-  },{
+  },
+  {
     articleId: 1233,
     title: '如此美丽',
     displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
@@ -75,12 +75,12 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     this.scrollLoad();
   }
 
-  cropperSettingsInit(){
+  cropperSettingsInit() {
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 150;
     this.cropperSettings.height = 120;
-    this.cropperSettings.croppedWidth = 100;
-    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.croppedWidth = 400;
+    this.cropperSettings.croppedHeight = 400;
     this.cropperSettings.canvasWidth = 400;
     this.cropperSettings.canvasHeight = 400;
     this.cropperSettings.noFileInput = true;
@@ -96,11 +96,12 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   }
 
   articleList() {
-    this.articleService.getbyuserid(this.articleReqObj).subscribe(
+    this.articleService.listbyuserid(this.articleReqObj).subscribe(
       resp => {
+        const that = this;
         _.forEach(this.dispalyList, function(acticle){
-          if (acticle.firstImg !== ''){
-            acticle['imgData']['img'] = this.envImgUrl + acticle.firstImg;
+          if (acticle.firstImg !== '') {
+            acticle['imgData']['img'] = that.envImgUrl + acticle.firstImg;
           }
         });
         this.dispalyList = resp.datas;
@@ -178,10 +179,10 @@ export class ShowListComponent implements OnInit, AfterViewInit {
         // 滚动到底部一定距离后，追加几条数据
         if (srcollBottom < 800 && this.articleReqObj.page < this.pages) {
           this.articleReqObj.page = this.articleReqObj.page + 1;
-          this.articleService.getbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
+          this.articleService.listbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
             resp => {
               _.forEach(this.dispalyList, function(acticle){
-                if (acticle.firstImg !== ''){
+                if (acticle.firstImg !== '') {
                   acticle['imgData']['img'] = this.envImgUrl + acticle.firstImg;
                 }
               });
@@ -211,15 +212,15 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   this.deleteArticleModal.show();
  }
 
- ngAfterViewInit(){
+ ngAfterViewInit() {
   this.cropperList.forEach(function(cropper, index){
-    const image:any = new Image();
-    image.crossOrigin = "Anonymous";
+    const image: any = new Image();
+    image.crossOrigin = 'Anonymous';
     image.src = cropper.image.img;
     const that = this;
     image.onload = function(){
-      cropper.setImage(image)
-    }
+      cropper.setImage(image);
+    };
   });
  }
 }

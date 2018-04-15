@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable} from 'rxjs/Rx';
 
 import { User } from '../_models/user';
 
@@ -7,5 +9,4 @@ export class UserService {
   user: User;
 
   constructor() { }
-
 }

@@ -7,15 +7,20 @@
       <div class="form-group editItem">
         <div class="row avatar">
           <div class="col-xs-2">
-            <div class="avatarImg" *ngIf="data.image">
-                <img [src]="data.image">
+            <div class="avatarImg" *ngIf="imgData.image">
+              <img [src]="imgData.image"  alt="avatar image">
+            </div>
+            <div class="avatarImg" *ngIf="!imgData.image">
+              <!--<img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">-->
+              <img src="/assets/img/show.jpg" alt="avatar image">
             </div>
           </div>
           <div class="col-xs-10">
-            <div class="file-upload">
-                <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+            <div class="btn btn-info file-upload">
+              <input class="file-btn"  type="file" (change)="fileChangeListener($event)">
+              更改头像
             </div>
-            <img-cropper #cropper class="hidden" [image]="data" [settings]="cropperSettings"></img-cropper>
+            <img-cropper #cropper class="hidden" [image]="imgData" [settings]="cropperSettings"></img-cropper>
           </div>
         </div>
       </div>

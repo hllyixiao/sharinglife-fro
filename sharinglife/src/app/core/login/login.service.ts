@@ -7,11 +7,19 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
   /**
-  *	@ param clientLogin用户登陆
+  *	@ param login用户登陆
   */
-  clientLogin(login): Observable<any> {
+  login(login): Observable<any> {
     return this.http.post('sl/api/lr/login', login);
   }
+
+  /**
+  * @ logout用户登出
+  */
+  logout(): Observable<any> {
+    return this.http.get('sl/api/lr/logout');
+  }
+
   /**
   * @获取登录验证码
   */

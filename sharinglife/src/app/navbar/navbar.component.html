@@ -18,10 +18,10 @@
       </button>
       <ul class="dropdown-menu">
         <!--<li><a [routerLink]="['/management', 42] [queryParams]="{username: 'true'}"><i class="fa fa-user-secret"></i> 个人主页</a></li>-->
-        <li><a [routerLink]="['/management', user.id, 'article', 'published']"><i class="fa fa-user-secret"></i> 个人主页</a></li>
+        <li><a [routerLink]="['/management/article/published']"><i class="fa fa-user-secret"></i> 个人主页</a></li>
         <li><a href="#">Another action</a></li>
         <li><a href="#">Something else here</a></li>
-        <li><a href="#">Separated link</a></li>
+        <li><a (click)="exit()"><i class="iconfont icon-hkquit"></i> 退出</a></li>
       </ul>
     </div>
     <div class="nav-center">

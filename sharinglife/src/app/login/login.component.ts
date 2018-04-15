@@ -74,10 +74,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // 用户登录
-  clientLogin() {
+  login() {
     if (!this.loginInfoHasError()) {
        this.loginInfo.value.password = Md5.hashStr(this.loginInfo.value.password).toString();
-       this.loginService.clientLogin(this.loginInfo.value).subscribe(resp => {
+       this.loginService.login(this.loginInfo.value).subscribe(resp => {
           if (resp.statusCode === 1) {
             this.loginState = true;
             this.showverifyCode = false;

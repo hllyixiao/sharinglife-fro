@@ -4,16 +4,28 @@
 <div class="layout-main">
   <div class="row personal-info">
     <div class="col-xs-2 img">
-      <img src="../../assets/img/show.jpg" alt="avatar image" class="img-thumbnail img-circle img-avatar">
+      <img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image" class="img-thumbnail img-circle img-avatar">
     </div>
     <div class="col-xs-10 info">
       <div class="personal-header">
-        <h1 class="pull-left">Chup</h1>
+        <span class="name">{{ this.user.name }}</span>
+        <span class="motto">{{ this.user.motto }}</span>
         <a routerLink="/personal/infomation">
           <button type="button" class="btn btn-info pull-right">
               <i class="fa fa-info-circle"></i> 个人信息编辑
           </button>
         </a>
+      </div>
+      <div class="info">
+        <ul>
+          <li><a href="#">
+              <p>20</p>关注 <i class="fa fa-info-circle"></i>
+          </a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+        </ul>
       </div>
     </div>
   </div>

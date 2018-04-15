@@ -33,10 +33,10 @@ import { UserService } from './user.service';
     },
     AuthGuardService,
     AuthService,
-    ArticleService,
+    UserService,
     LoginService,
     RegisterService,
-    UserService
+    ArticleService,
   ]
 })
 export class CoreModule { }

@@ -75,14 +75,13 @@ export class CreationComponent implements OnInit {
     const thisComp = this;
     this.editor = new Editor('#creation-write');
     this.editor.customConfig.menus = EditorConfig.wangEditorConfig.menus;
-    this.editor.customConfig.uploadImgServer = 'sl/api/article/addarticlepicture';
+    this.editor.customConfig.uploadImgServer = 'sl/api/article/addpicture';
     this.editor.customConfig.uploadFileName = 'file';
     this.editor.customConfig.withCredentials = true;
     this.editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024; // 图片大小
     this.editor.customConfig.uploadImgMaxLength = 5; // 限制一次最多上传张图片
     this.editor.customConfig.uploadImgTimeout = 100000; // 超时时长 默认10s
     this.editor.customConfig.uploadImgParams = {
-      'userId': 10009, // this.userService.user,
       'articleId': 25
     };
 

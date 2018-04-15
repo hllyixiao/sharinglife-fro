@@ -12,16 +12,24 @@ export class HttpRequestInterceptor implements HttpInterceptor {
      constructor(private auth: AuthService, private userService: UserService) {}
     // const authHeader = this.auth.getAuthorizationHeader();
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let cloneReq: HttpRequest<any>;
         if (this.userService.user) {
             this.auth.updateJwtUserCookie(this.userService.user.name);
         }
-        const cloneReq = req.clone({
-            setHeaders: { // req.clone({headers: req.headers.set('Authorization', authHeader)});
-                'Cache-Control': 'no-cache',
-                'Content-Type': 'application/json'
-            },
-             url: env.apiProxyUrl + req.url
-        });
+
+        if ( req.url.indexOf('setavatar') > 0) {
+            cloneReq = req.clone({
+                url: env.apiProxyUrl + req.url
+            });
+        }else {
+            cloneReq = req.clone({
+                setHeaders: { // req.clone({headers: req.headers.set('Authorization', authHeader)});
+                    'Cache-Control': 'no-cache',
+                    'Content-Type': 'application/json'
+                },
+                 url: env.apiProxyUrl + req.url
+            });
+        }
         return next.handle(cloneReq);
     }
 }
