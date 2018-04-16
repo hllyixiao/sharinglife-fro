@@ -61,15 +61,18 @@ export class PersonalInformationComponent implements OnInit {
     const file: File = $event.target.files[0];
     const avatarImgName = file.name;
     let avatarImgType = 'image/jpg';
-    myReader.onloadend = function (loadEvent: any) {
+    myReader.onload = function (loadEvent: any) {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);
         avatarImgType = 'image/' + _.last(file.name.split('.'));
         const formData = new FormData(that.personalInfoForm.value);
-        formData.append('avatar', that.getBlobBydataURI(that.imgData.image, avatarImgType), avatarImgName);
-        that.articleService.setavatar(formData).subscribe(
-          resp => console.log('updatePersonalInfo')
-        );
+        setTimeout(function() { // 需要等待下,不然that.imageData.image可能为空
+          formData.append('avatar', that.getBlobBydataURI(that.imgData.image, avatarImgType), avatarImgName);
+          that.articleService.setavatar(formData).subscribe(
+            resp => console.log('updatePersonalInfo')
+          );
+        },100);
+
     };
     myReader.readAsDataURL(file);
   }

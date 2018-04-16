@@ -16,10 +16,11 @@
             </div>
           </div>
           <div class="col-xs-10">
-            <div class="btn btn-info file-upload">
-              <input class="file-btn"  type="file" (change)="fileChangeListener($event)">
+            <!-- <div class="btn btn-info file-upload">
+               <input class="file-btn"  type="file" (change)="fileChangeListener($event)" accept="image/*" >
               更改头像
-            </div>
+            </div> -->
+            <button type="button" class="btn btn-info file-loading">头像上传中 <i class="fa fa-spinner fa-spin"></i></button>
             <img-cropper #cropper class="hidden" [image]="imgData" [settings]="cropperSettings"></img-cropper>
           </div>
         </div>
