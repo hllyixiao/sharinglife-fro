@@ -11,7 +11,7 @@ export class ArticleService {
   * @新建文章
   */
   addArticle(article): Observable<any> {
-    return this.http.post('sl/api/article/addarticle', article);
+    return this.http.post('sl/api/article/add', article);
   }
 
   /**

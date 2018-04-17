@@ -1,5 +1,5 @@
 export class User {
-    obsUserId: number;
+    obsUserId: string;
     name: string;
     phone: string;
     password: string;

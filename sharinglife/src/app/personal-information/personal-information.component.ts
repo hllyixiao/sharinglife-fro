@@ -74,16 +74,17 @@ export class PersonalInformationComponent implements OnInit {
           formData.append('avatar', that.getBlobBydataURI(that.imgData.image, avatarImgType), avatarImgName);
           that.articleService.setavatar(formData).subscribe({
             next: resp => {
-               this.alerts[0] = {
+              that.user.avatarUrl = resp;
+              that.alerts[0] = {
                   type: 'info',
                   msg: `头像上传成功！`,
                   timeout: 2500
-                }
+                };
             },
             error: err => {},
-            complete: () => { that.updateAvatarImgState = 'end' }
+            complete: () => { that.updateAvatarImgState = 'end'; }
           });
-        },100);
+        }, 200);
 
     };
     myReader.readAsDataURL(file);

@@ -28,8 +28,7 @@ export class CreationComponent implements OnInit {
     title: '',
     contentHtml: '',
     contentTxt: '',
-    contentSize: 0,
-    userId: -1
+    contentSize: 0
   };
   public hideContentPlaceholder = false;
   public showWarningContent = false;
@@ -82,7 +81,7 @@ export class CreationComponent implements OnInit {
     this.editor.customConfig.uploadImgMaxLength = 5; // 限制一次最多上传张图片
     this.editor.customConfig.uploadImgTimeout = 100000; // 超时时长 默认10s
     this.editor.customConfig.uploadImgParams = {
-      'articleId': 25
+      'articleId': 25 // TODO
     };
 
     this.editor.customConfig.uploadImgHooks = {

@@ -19,24 +19,22 @@ export class PageNotFoundComponent implements OnInit {
         minContainerHeight :  200,
         minContainerWidth : 200,
         autoCropArea: 1,
-        aspectRatio: 150 / 120,//裁剪框比例 1：1
-        viewMode : 1,//显示
-        guides :false,//裁剪框虚线 默认true有
-        dragMode : "move",
-        build: function (e) { //加载开始
-            //可以放你的过渡 效果
+        aspectRatio: 150 / 120, // 裁剪框比例 1：1
+        viewMode : 1, // 显示
+        guides : false, // 裁剪框虚线 默认true有
+        dragMode : 'move',
+        build: function (e) { // 加载开始
+            // 可以放你的过渡 效果
         },
-        built: function (e) { //加载完成
-            $("#containerDiv").show();
-            $("#imgEdit").show();
+        built: function (e) { // 加载完成
         },
         zoom: function (e) {
           console.log(e.type, e.detail.ratio);
         },
-        background : false,// 容器是否显示网格背景
-        movable : false,//是否能移动图片
-        cropBoxMovable :true,//是否允许拖动裁剪框
-        cropBoxResizable :true,//是否允许拖动 改变裁剪框大小
+        background : false, // 容器是否显示网格背景
+        movable : false, // 是否能移动图片
+        cropBoxMovable : true, // 是否允许拖动裁剪框
+        cropBoxResizable : true, // 是否允许拖动 改变裁剪框大小
     }
   }
 

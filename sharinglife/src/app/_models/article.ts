@@ -5,5 +5,4 @@ export class Article {
     contentHtml: string; // 文章内容 html格式
     contentTxt: string; // 文章内容 txt纯文本格式
     contentSize: number; // 文章长度
-    userId: number; // 文章所属用户Id
 }
