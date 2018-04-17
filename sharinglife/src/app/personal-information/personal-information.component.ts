@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 
+import { AlertComponent } from 'ngx-bootstrap/alert/alert.component';
 import { ArticleService } from '../core/article.service';
 import { UserService } from '../core/user.service';
 
@@ -20,6 +21,8 @@ export class PersonalInformationComponent implements OnInit {
   public user;
   public envImgUrl = env.imgUrl;
   public cropperSettings: CropperSettings;
+  public updateAvatarImgState = 'end';
+  public alerts: any[] = [];
   @ViewChild('cropper', undefined)cropper: ImageCropperComponent;
 
   constructor(
@@ -60,6 +63,7 @@ export class PersonalInformationComponent implements OnInit {
     const myReader: FileReader = new FileReader();
     const file: File = $event.target.files[0];
     const avatarImgName = file.name;
+    this.updateAvatarImgState = 'start';
     let avatarImgType = 'image/jpg';
     myReader.onload = function (loadEvent: any) {
         image.src = loadEvent.target.result;
@@ -68,9 +72,17 @@ export class PersonalInformationComponent implements OnInit {
         const formData = new FormData(that.personalInfoForm.value);
         setTimeout(function() { // 需要等待下,不然that.imageData.image可能为空
           formData.append('avatar', that.getBlobBydataURI(that.imgData.image, avatarImgType), avatarImgName);
-          that.articleService.setavatar(formData).subscribe(
-            resp => console.log('updatePersonalInfo')
-          );
+          that.articleService.setavatar(formData).subscribe({
+            next: resp => {
+               this.alerts[0] = {
+                  type: 'info',
+                  msg: `头像上传成功！`,
+                  timeout: 2500
+                }
+            },
+            error: err => {},
+            complete: () => { that.updateAvatarImgState = 'end' }
+          });
         },100);
 
     };
@@ -81,6 +93,10 @@ export class PersonalInformationComponent implements OnInit {
     this.articleService.updateUser(this.personalInfoForm.value).subscribe(
       resp => console.log('updatePersonalInfosub')
     );
+  }
+
+  onClosed(dismissedAlert: AlertComponent): void {
+    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
   }
 
   // base64字符串转换为Blob对象（二进制大对象）

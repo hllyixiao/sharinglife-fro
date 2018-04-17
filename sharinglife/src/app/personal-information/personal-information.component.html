@@ -2,6 +2,9 @@
   <app-navbar></app-navbar>
 </div>
 <div class="layout-main">
+  <div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+  </div>
   <div class="editContainer">
     <form [formGroup]="personalInfoForm">
       <div class="form-group editItem">
@@ -16,11 +19,13 @@
             </div>
           </div>
           <div class="col-xs-10">
-            <!-- <div class="btn btn-info file-upload">
+            <div class="btn btn-info file-upload" [ngClass]="{'hidden': updateAvatarImgState == 'start'}">
                <input class="file-btn"  type="file" (change)="fileChangeListener($event)" accept="image/*" >
               更改头像
-            </div> -->
-            <button type="button" class="btn btn-info file-loading">头像上传中 <i class="fa fa-spinner fa-spin"></i></button>
+            </div>
+            <button type="button" class="btn btn-info file-loading" [ngClass]="{'hidden': updateAvatarImgState == 'end'}">头像上传中
+              <i class="fa fa-spinner fa-spin"></i>
+            </button>
             <img-cropper #cropper class="hidden" [image]="imgData" [settings]="cropperSettings"></img-cropper>
           </div>
         </div>
