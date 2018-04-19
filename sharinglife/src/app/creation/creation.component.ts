@@ -58,7 +58,7 @@ export class CreationComponent implements OnInit {
           if (article.content !== '<p><br></p>') {
             this.hideContentPlaceholder = true;
           }
-          this.editor.txt.html(article.content);
+          this.editor.txt.html(article.contentHtml);
           this.editTitle = article.title;
         }
       );

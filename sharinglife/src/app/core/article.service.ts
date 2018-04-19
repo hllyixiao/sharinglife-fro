@@ -18,7 +18,7 @@ export class ArticleService {
   * @更新文章
   */
   updateArticle(article): Observable<any> {
-    return this.http.post('sl/api/article/updatearticle', article);
+    return this.http.post('sl/api/article/update', article);
   }
 
   /**

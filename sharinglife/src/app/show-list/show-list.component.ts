@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, ParamMap } from '@angular/router';
-import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -56,10 +55,8 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   public showStatusTxt = '已发布';
   public pages = 0;
   public user;
-  public cropperSettings: CropperSettings;
 
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
-  @ViewChildren(ImageCropperComponent) cropperList: QueryList<ImageCropperComponent>;
   constructor(
     private articleService: ArticleService,
     private route: ActivatedRoute,
@@ -76,14 +73,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   }
 
   cropperSettingsInit() {
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 150;
-    this.cropperSettings.height = 120;
-    this.cropperSettings.croppedWidth = 400;
-    this.cropperSettings.croppedHeight = 400;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.canvasHeight = 400;
-    this.cropperSettings.noFileInput = true;
+
   }
 
   routeChange() {
@@ -98,12 +88,6 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   articleList() {
     this.articleService.listbyuserid(this.articleReqObj).subscribe(
       resp => {
-        const that = this;
-        _.forEach(this.dispalyList, function(acticle){
-          if (acticle.firstImg !== '') {
-            acticle['imgData']['img'] = that.envImgUrl + acticle.firstImg;
-          }
-        });
         this.dispalyList = resp.datas;
         this.pages = resp.pages;
       }
@@ -181,11 +165,6 @@ export class ShowListComponent implements OnInit, AfterViewInit {
           this.articleReqObj.page = this.articleReqObj.page + 1;
           this.articleService.listbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
             resp => {
-              _.forEach(this.dispalyList, function(acticle){
-                if (acticle.firstImg !== '') {
-                  acticle['imgData']['img'] = this.envImgUrl + acticle.firstImg;
-                }
-              });
               this.dispalyList = _.concat(this.dispalyList, resp.datas);
               this.ngAfterViewInit();
             }
@@ -213,14 +192,5 @@ export class ShowListComponent implements OnInit, AfterViewInit {
  }
 
  ngAfterViewInit() {
-  this.cropperList.forEach(function(cropper, index){
-    const image: any = new Image();
-    image.crossOrigin = 'Anonymous';
-    image.src = cropper.image.img;
-    const that = this;
-    image.onload = function(){
-      cropper.setImage(image);
-    };
-  });
  }
 }
