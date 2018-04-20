@@ -1,0 +1,17 @@
+.layout-main {
+  top: 60px;
+  width: 776px;
+  margin: 47px auto 0;
+  position: relative;
+  .article {
+    .title {
+      word-break: break-word!important;
+      word-break: break-all;
+      margin: 20px 0 0;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.3;
+      font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+    }
+  }
+}

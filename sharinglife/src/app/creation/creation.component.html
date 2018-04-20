@@ -7,7 +7,19 @@
       <div class="container">
         <div class="create-title">写文章</div>
       </div>
-      <button type="button" class="btn btn-default create-release">发布</button>
+      <div class="btn-group create-release"  [ngClass]="{'open': showImageNav}">
+        <button class="btn btn-default" type="button" [disabled]="article.id > 0" (click)="showImageNav = !showImageNav">发布</button>
+        <ul class="dropdown-menu">
+          <li>
+            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="yes"> 允许
+            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="no"> 不允许
+          </li>
+          <li>
+            <button class="btn btn-default" type="button" (click)="publishArticle()">确认发布</button>
+          </li>
+        </ul>
+      </div>
+
       <button type="button" class="btn btn-default create-save" (click)="saveArticle()">保存</button>
     </div>
   </nav>

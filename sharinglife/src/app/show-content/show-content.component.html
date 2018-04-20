@@ -1,0 +1,13 @@
+<div class="container">
+  <app-navbar></app-navbar>
+</div>
+<div class="layout-main">
+  <div class="article">
+    <!-- 文章标题 -->
+    <h1 class="title">{{ article.title }}</h1>
+    <!-- 作者部分 -->
+    <div class="author">作者</div>
+    <!-- 文章内容 -->
+    <div [innerHtml] = "article.contentHtml | safePipe: 'Html'"></div>
+  </div>
+</div>

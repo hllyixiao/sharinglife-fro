@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import * as Editor from 'wangEditor';
@@ -19,7 +19,7 @@ import { environment as env} from '../../environments/environment';
   templateUrl: './creation.component.html',
   styleUrls: ['./creation.component.scss']
 })
-export class CreationComponent implements OnInit {
+export class CreationComponent implements OnInit, AfterViewInit{
 
   public editor;
   public article: Article = {
@@ -35,6 +35,8 @@ export class CreationComponent implements OnInit {
   public warningContent = '';
   public editTitle = '';
   public createArticle = true;
+  public commentFlag = 'yes';
+  public showImageNav = false;
   public articleChangeSubject = new Subject();
 
   constructor(
@@ -44,7 +46,8 @@ export class CreationComponent implements OnInit {
     private router: Router,
     private eleRef: ElementRef,
     private render: Renderer2,
-    private location: LocationStrategy) { }
+    private location: LocationStrategy) {
+  }
 
   ngOnInit() {
     this.initWangEditor();
@@ -112,7 +115,7 @@ export class CreationComponent implements OnInit {
     this.editor.customConfig.onchange = function (html) {
       if (thisComp.article.id === 0 && thisComp.createArticle) { // create 立即上传
         thisComp.createArticle = false;
-        this.saveArticle();
+        thisComp.saveArticle();
       }else { //  update延迟3s
         thisComp.articleChangeSubject.next(thisComp.article);
       }
@@ -128,10 +131,11 @@ export class CreationComponent implements OnInit {
     });
   }
 
+  // 创建/ 更新文章内容
   saveArticle() {
     this.article.contentHtml = this.editor.txt.html();
     this.article.contentTxt = this.getPureTxt(this.article.contentHtml);
-    this.article.contentSize = this.getPureTxt(this.article.contentHtml).length;
+    this.article.contentSize = this.article.contentTxt.length;
     if (this.article.id === 0) { // 新建文章
       this.articleService.addArticle(this.article).subscribe(
         articleId => {
@@ -147,9 +151,15 @@ export class CreationComponent implements OnInit {
     }
   }
 
+  // 发布文章
+  publishArticle() {
+    console.log({'articleId': this.article.id, 'commentFlag': this.commentFlag});
+    this.showImageNav = false;
+  }
+
   // 获取富文本框中的纯文本
   getPureTxt(html): string {
-    const entity = html.replace(/<[^>]*>/g, ''); // 去除html标签
+    const entity = html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, '').replace(/ /g, ''); // 去除html标签, 去除空格
     const div = this.render.createElement('div');
     div.innerHTML = entity;
     const pureTxt = div.innerText || div.textContent; // html实体字符转换成正常字符
@@ -172,5 +182,13 @@ export class CreationComponent implements OnInit {
     }else { //  update延迟3s
       this.articleChangeSubject.next(this.article);
     }
+  }
+
+  ngAfterViewInit() {
+    // 浏览器关闭，刷新时保存数据
+    const that = this;
+    this.eleRef.nativeElement.ownerDocument.defaultView.onbeforeunload = function(){
+       that.saveArticle();
+    };
   }
 }

@@ -21,6 +21,7 @@ import { MyManagementComponent } from './my-management/my-management.component';
 
 import { ImageCropperComponent } from 'ng2-img-cropper';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
+import { ShowContentComponent } from './show-content/show-content.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { PersonalInformationComponent } from './personal-information/personal-in
     NavbarComponent,
     MyManagementComponent,
     ImageCropperComponent,
-    PersonalInformationComponent
+    PersonalInformationComponent,
+    ShowContentComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

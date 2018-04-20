@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 // component
 import { CreationComponent } from '../creation/creation.component';
 import { ShowListComponent } from '../show-list/show-list.component';
+import { ShowContentComponent } from '../show-content/show-content.component';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'creation', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'edit/article/:articleId', component: CreationComponent}, // , canActivate: [AuthGuardService] },
   { path: 'draftlist', component: ShowListComponent},
+  { path: 'show/:articleId', component: ShowContentComponent},
   { path: 'management',
     component: MyManagementComponent, // , canActivate: [AuthGuardService] },
     children: [
