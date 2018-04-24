@@ -53,6 +53,9 @@
       .txt {
         vertical-align: middle;
         display: inline-block;
+        .indentTwo { 
+            text-indent: 2em 
+          }  
       }
       .has-img {
         width: 490px;

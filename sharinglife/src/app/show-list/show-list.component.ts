@@ -1,8 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, ParamMap } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
+import Cropper from 'cropperjs';
 import 'rxjs/Rx';
+
 import * as _ from 'lodash';
 
 import { ArticleService } from '../core/article.service';
@@ -16,7 +18,7 @@ import { environment as env} from '../../environments/environment';
   templateUrl: './show-list.component.html',
   styleUrls: ['./show-list.component.scss']
 })
-export class ShowListComponent implements OnInit, AfterViewInit {
+export class ShowListComponent implements OnInit {
   public deleteArticleId: number;
   public envImgUrl = env.imgUrl;
   public hasDataLoad = true;
@@ -25,34 +27,15 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     page: 1,
     limit: 3
   };
-  public dispalyList = [
-  {
-    articleId: 1209,
-    title: '我们的世界',
-    displayContextTxt: `老伴，茶已經給你泡好，可以喝了！”我正在後院打太極，前廳傳來老婆子那破鑼般的叫喊声。 “知道了，馬上就過去，整天叨叨叨的，煩不煩啊？”我應了一聲，收了手勢，深吸一口氣，踱步...`,
-    displayUpdateTime: '1小时前',
-    firstImg: '/assets/img/show.jpg',
-    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
-  },
-  {
-    articleId: 1233,
-    title: '如此美丽',
-    displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
-    displayUpdateTime: '2018-04-04',
-    firstImg: '/assets/img/show.jpg',
-    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
-  },
-  {
-    articleId: 1233,
-    title: '如此美丽',
-    displayContextTxt: `关于我✨ 98年，一枚爱文字的南方姑娘(家乡湖北)，法律系在读大学生，坐标济南。 爱笑，因为坚信“爱笑的女孩运气不会太差”(ฅ>ω<*ฅ) 爱交朋友，因为明白了世界上有很多优...`,
-    displayUpdateTime: '2018-04-04',
-    firstImg: '/assets/img/show.jpg',
-    imgData: {'img': 'http://p0.ifengimg.com/pmop/2018/0411/8734550296514D1255C2ADFF416F877233E71290_size218_w1440_h1080.jpeg'},
-  }];
+  public dispalyList = [];
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public showCategoryTxt = '文章';
   public showStatusTxt = '已发布';
+  public crooper_options = {
+    aspectRatio: 5 / 4,
+    canvasWidth: 150,
+    canvasHeight: 120
+  };
   public pages = 0;
   public user;
 
@@ -66,19 +49,15 @@ export class ShowListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.user = this.userService.user;
-    this.cropperSettingsInit();
     this.articleList();
     this.routeChange();
     this.scrollLoad();
   }
 
-  cropperSettingsInit() {
-
-  }
-
   routeChange() {
     this.router.events.subscribe(event => {
       if ( event instanceof NavigationEnd ) {
+        this.articleReqObj.page = 1;
         this.initReqInfo();
         this.articleList();
       }
@@ -88,10 +67,49 @@ export class ShowListComponent implements OnInit, AfterViewInit {
   articleList() {
     this.articleService.listbyuserid(this.articleReqObj).subscribe(
       resp => {
-        this.dispalyList = resp.datas;
+        this.dispalyList = this.cropperImage(resp.datas);
         this.pages = resp.pages;
-      }
-    );
+       });
+  }
+
+  cropperImage (articleList) {
+    const that = this;
+    _.forEach(articleList, function(artilce){
+      const drawIma = { sx: 0, sy: 0, sw: 0, sh: 0, dx: 0, dy: 0, dw: 0, dh: 0};
+      const image = new Image();
+      image.setAttribute('crossOrigin', 'anonymous'); // 允许图片
+      image.src = artilce.firstImg;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = that.crooper_options.canvasWidth;
+      canvas.height = that.crooper_options.canvasHeight;
+      const ctx = canvas.getContext('2d');
+
+      image.onload = function(){
+        if ( image.width / image.height > that.crooper_options.aspectRatio) { // width/height > aspectRatio
+          drawIma.sx = (image.width - image.height * that.crooper_options.aspectRatio) / 2;
+          drawIma.sy = 0;
+          drawIma.sw = image.width - 2 * drawIma.sx;
+          drawIma.sh = image.height;
+          drawIma.dx = 0;
+          drawIma.dy = 0;
+          drawIma.dw = that.crooper_options.canvasWidth;
+          drawIma.dh = that.crooper_options.canvasHeight;
+        }else {  // width/height <= aspectRatio
+          drawIma.sx = 0;
+          drawIma.sy = (image.height - image.width / that.crooper_options.aspectRatio) / 2;
+          drawIma.sw = image.width;
+          drawIma.sh = image.height - 2 * drawIma.sy ;
+          drawIma.dx = 0;
+          drawIma.dy = 0;
+          drawIma.dw = that.crooper_options.canvasWidth;
+          drawIma.dh = that.crooper_options.canvasHeight;
+        }
+        ctx.drawImage(image, drawIma.sx, drawIma.sy, drawIma.sw, drawIma.sh, drawIma.dx, drawIma.dy, drawIma.dw, drawIma.dh);
+        artilce['cropperImg'] = canvas.toDataURL(_.last(artilce.firstImg.split('.')));
+      };
+    });
+    return articleList;
   }
 
  initReqInfo() {
@@ -152,6 +170,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
     this.showStatusTxt = '回收站';
   }
  }
+
  scrollLoad() {
     // throttleTime 发出第一个值，忽略等待时间内发出的值，等待时间过后再发出新值
     Observable.fromEvent(window, 'scroll').throttleTime(1500).subscribe(
@@ -165,8 +184,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
           this.articleReqObj.page = this.articleReqObj.page + 1;
           this.articleService.listbyuserid(this.articleReqObj).subscribe( // this.userService.user.id
             resp => {
-              this.dispalyList = _.concat(this.dispalyList, resp.datas);
-              this.ngAfterViewInit();
+              this.dispalyList = _.concat(this.dispalyList, this.cropperImage(resp.datas));
             }
           );
         }
@@ -178,7 +196,7 @@ export class ShowListComponent implements OnInit, AfterViewInit {
 
  deleteArticle(articleId: number) {
   this.articleService.deleteArticleByIds([articleId]).subscribe(
-      req => {
+      req => { // 修改下删除后 获取下一个替换删除了的数据？
         this.deleteArticleModal.hide();
         this.articleList();
       },
@@ -189,8 +207,5 @@ export class ShowListComponent implements OnInit, AfterViewInit {
  showDeleteModal(articleId: number) {
   this.deleteArticleId = articleId;
   this.deleteArticleModal.show();
- }
-
- ngAfterViewInit() {
  }
 }

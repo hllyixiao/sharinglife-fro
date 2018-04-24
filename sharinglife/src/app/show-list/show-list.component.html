@@ -7,30 +7,35 @@
           <div class="author">
             <a class="avatar" target="_blank" routerLink="../article/published">
               <!--<img src="/assets/img/authorImg.png">-->
-              <img src="{{ envImgUrl + user.avatarUrl }}">
+              <img *ngIf="!this.user.avatarUrlBase64" src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
+              <img *ngIf="!!this.user.avatarUrlBase64" src="{{ this.user.avatarUrlBase64 }}" alt="avatar image">
             </a>
             <div class="info">
-               <!--<a class="nickName" target="_blank" routerLink="">username</a>-->
+                <!--<a class="nickName" target="_blank" routerLink="">username</a>-->
                 <a class="nickName" target="_blank" routerLink="">{{ user.name }}</a>
                 <span class="time">{{item.displayUpdateTime}}</span>
             </div>
           </div>
           <div class="item-content">
             <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
-              <h2 class="title"><a [routerLink]="['/edit/article', item.articleId]" target="_blank">{{ item.title }}</a></h2>
-              <p *ngIf="!!item.firstImg">{{ item.displayContextTxt | omit: 100}}</p>
-              <p *ngIf="!item.firstImg">{{ item.displayContextTxt | omit: 120}}</p>
+              <h2 class="title" [ngSwitch]="articleReqObj.status">
+                <a [routerLink]="['/edit/article', item.articleId]" target="_blank" *ngSwitchCase="1">{{ item.title }}</a>
+                <a [routerLink]="['/show', item.articleId]" target="_blank" *ngSwitchCase="2">{{ item.title }}</a>
+                <span *ngSwitchDefault>{{ item.title }}</span>
+              </h2>
+              <p class="indentTwo" *ngIf="!!item.firstImg">{{ item.displayContextTxt | omit: 100}}</p>
+              <p class="indentTwo" *ngIf="!item.firstImg">{{ item.displayContextTxt | omit: 120}}</p>
             </div>
-            <div *ngIf="!!item.firstImg" class="img">
+            <div *ngIf="!!item.cropperImg" class="img">
               <a target="_blank" [routerLink]="['/edit/article', item.articleId]">
-                <img  [src]="item.firstImg">
+                <img [src]="item.cropperImg">
               </a>
             </div>
           </div>
           <div class="item-foot">
             <a class="deleteLink" data-toggle="modal" data-target="#deleteArticleModal" (click)="showDeleteModal(item.articleId)">删除</a>
-            <span class="operate-bull">•</span>
-            <a [routerLink]="['../edit/article', item.articleId]" target="_blank">编辑</a>
+            <span class="operate-bull" *ngIf="articleReqObj.status === 1">•</span>
+            <a [routerLink]="['../edit/article', item.articleId]" target="_blank" *ngIf="articleReqObj.status === 1">编辑</a>
             <span class="operate-bull">•</span>
             <i class="fa fa-eye"></i> {{item.displayReadVolumes}}
             <span class="operate-bull">•</span>
