@@ -74,7 +74,8 @@ export class PersonalInformationComponent implements OnInit {
           formData.append('avatar', that.getBlobBydataURI(that.imgData.image, avatarImgType), avatarImgName);
           that.articleService.setavatar(formData).subscribe({
             next: resp => {
-              that.user.avatarUrl = resp;
+             // that.user.avatarUrl = resp + '?t=' + new Date().getTime();
+              that.user.avatarUrlBase64 = that.imgData.image;
               that.alerts[0] = {
                   type: 'info',
                   msg: `头像上传成功！`,

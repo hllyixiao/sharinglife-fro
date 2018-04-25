@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
           if (resp.statusCode === 1) {
             this.loginState = true;
             this.showverifyCode = false;
-            this.userService.user = resp.user;
-            this.auth.updateJwtUserCookie(resp.user.name);
+            this.userService.user = resp.data;
+            this.auth.updateJwtUserCookie(resp.data.name);
             this.router.navigate(['/home']);
           } else {
             this.loginState = false;

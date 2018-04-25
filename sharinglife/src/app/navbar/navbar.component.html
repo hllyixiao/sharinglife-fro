@@ -14,7 +14,8 @@
 
     <div *ngIf="user" class="btn-group navbar-avatar">
       <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
+        <img *ngIf="!this.user.avatarUrlBase64" src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
+        <img *ngIf="!!this.user.avatarUrlBase64" src="{{ this.user.avatarUrlBase64 }}" alt="avatar image">
       </button>
       <ul class="dropdown-menu">
         <!--<li><a [routerLink]="['/management', 42] [queryParams]="{username: 'true'}"><i class="fa fa-user-secret"></i> 个人主页</a></li>-->

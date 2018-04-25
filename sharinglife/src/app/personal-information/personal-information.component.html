@@ -11,7 +11,8 @@
         <div class="row avatar">
           <div class="col-xs-2">
             <div class="avatarImg">
-              <img src="{{ this.envImgUrl + this.user.avatarUrl }}"  alt="avatar image">
+              <img *ngIf="!this.user.avatarUrlBase64" src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">
+              <img *ngIf="!!this.user.avatarUrlBase64" src="{{ this.user.avatarUrlBase64 }}" alt="avatar image">
             </div>
             <!--<div class="avatarImg" *ngIf="!imgData.image">
               <!--<img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image">

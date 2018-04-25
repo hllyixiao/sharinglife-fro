@@ -4,7 +4,9 @@
 <div class="layout-main">
   <div class="row personal-info">
     <div class="col-xs-2 img">
-      <img src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image" class="img-thumbnail img-circle img-avatar">
+      <img *ngIf="!this.user.avatarUrlBase64" src="{{ this.envImgUrl + this.user.avatarUrl }}" alt="avatar image" class="img-thumbnail img-circle img-avatar">
+      <!-- 上传头像时，使用本地base64数据 -->
+      <img *ngIf="!!this.user.avatarUrlBase64" src="{{ this.user.avatarUrlBase64 }}" alt="avatar image" class="img-thumbnail img-circle img-avatar">
     </div>
     <div class="col-xs-10 info">
       <div class="personal-header">
