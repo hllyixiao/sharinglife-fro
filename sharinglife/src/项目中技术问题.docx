@@ -1,0 +1,2 @@
+issue_1. 当img的src当前的url与上次地址无变化时（只更改图片，名称不变，不同图片名称相同）图片不变化（仍显示原来的图片），但通过firebug看图片已经变化，因为当src的地址不变时浏览器不会重新加载图片仍从缓存里面读取
+   suletion: $("#empImgContent").attr('src', src= empObj.empPic + "?t=" + new Date().getTime()); //显示图片
