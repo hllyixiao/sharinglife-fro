@@ -19,8 +19,9 @@
     "prefix": "app",
     "styles": [
       "assets/iconfont/iconfont.css",
-      "../node_modules/bootstrap/dist/css/bootstrap.css",
       "../node_modules/font-awesome/css/font-awesome.css",
+      "../node_modules/bootstrap/dist/css/bootstrap.css",
+      "../node_modules/cropperjs/dist/cropper.min.css",
       "styles.scss"
     ],
     "scripts": [

@@ -8,11 +8,11 @@
         <div class="create-title">写文章</div>
       </div>
       <div class="btn-group create-release"  [ngClass]="{'open': showImageNav}">
-        <button class="btn btn-default" type="button" [disabled]="article.id > 0" (click)="showImageNav = !showImageNav">发布</button>
+        <button class="btn btn-default" type="button" [disabled]="article.id === 0" (click)="showImageNav = !showImageNav">发布</button>
         <ul class="dropdown-menu">
           <li>
-            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="yes"> 允许
-            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="no"> 不允许
+            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="1"> 允许
+            <input type="radio" name="commentFlag" [(ngModel)]="commentFlag" value="0"> 不允许
           </li>
           <li>
             <button class="btn btn-default" type="button" (click)="publishArticle()">确认发布</button>
