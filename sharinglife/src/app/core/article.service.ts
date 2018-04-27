@@ -36,6 +36,14 @@ export class ArticleService {
     return this.http.get(url);
   }
 
+ /**
+  * @home 页面获取所有已发布的文章
+  */
+ list(chunkInfo): Observable<any> {
+  const url = `/sl/api/article/list?limit=${chunkInfo.limit}&page=${chunkInfo.page}`;
+  return this.http.get(url);
+}
+
   /**
   * @根据文章Id刪除文章
   */

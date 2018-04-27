@@ -8,6 +8,7 @@ import 'rxjs/Rx';
 import * as _ from 'lodash';
 
 import { ArticleService } from '../core/article.service';
+import { CommonFunctionService } from '../core/common-function.service';
 import { UserService } from '../core/user.service';
 
 import { Article } from '../_models/article';
@@ -31,7 +32,7 @@ export class ShowListComponent implements OnInit {
   public category = 1; // 1: 文章 2: 图片 3: 视频
   public showCategoryTxt = '文章';
   public showStatusTxt = '已发布';
-  public crooper_options = {
+  public crooperOptions = {
     aspectRatio: 5 / 4,
     canvasWidth: 150,
     canvasHeight: 120
@@ -41,11 +42,12 @@ export class ShowListComponent implements OnInit {
 
   @ViewChild('deleteArticleModal') deleteArticleModal: ModalDirective;
   constructor(
-    private articleService: ArticleService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
-    private elef: ElementRef) {}
+    private elef: ElementRef,
+    private articleService: ArticleService,
+    private commonFunc: CommonFunctionService,
+    private userService: UserService) {}
 
   ngOnInit() {
     this.user = this.userService.user;
@@ -74,40 +76,10 @@ export class ShowListComponent implements OnInit {
 
   cropperImage (articleList) {
     const that = this;
-    _.forEach(articleList, function(artilce){
-      const drawIma = { sx: 0, sy: 0, sw: 0, sh: 0, dx: 0, dy: 0, dw: 0, dh: 0};
-      const image = new Image();
-      image.setAttribute('crossOrigin', 'anonymous'); // 允许图片
-      image.src = artilce.firstImg;
-
-      const canvas = document.createElement('canvas');
-      canvas.width = that.crooper_options.canvasWidth;
-      canvas.height = that.crooper_options.canvasHeight;
-      const ctx = canvas.getContext('2d');
-
-      image.onload = function(){
-        if ( image.width / image.height > that.crooper_options.aspectRatio) { // width/height > aspectRatio
-          drawIma.sx = (image.width - image.height * that.crooper_options.aspectRatio) / 2;
-          drawIma.sy = 0;
-          drawIma.sw = image.width - 2 * drawIma.sx;
-          drawIma.sh = image.height;
-          drawIma.dx = 0;
-          drawIma.dy = 0;
-          drawIma.dw = that.crooper_options.canvasWidth;
-          drawIma.dh = that.crooper_options.canvasHeight;
-        }else {  // width/height <= aspectRatio
-          drawIma.sx = 0;
-          drawIma.sy = (image.height - image.width / that.crooper_options.aspectRatio) / 2;
-          drawIma.sw = image.width;
-          drawIma.sh = image.height - 2 * drawIma.sy ;
-          drawIma.dx = 0;
-          drawIma.dy = 0;
-          drawIma.dw = that.crooper_options.canvasWidth;
-          drawIma.dh = that.crooper_options.canvasHeight;
-        }
-        ctx.drawImage(image, drawIma.sx, drawIma.sy, drawIma.sw, drawIma.sh, drawIma.dx, drawIma.dy, drawIma.dw, drawIma.dh);
-        artilce['cropperImg'] = canvas.toDataURL(_.last(artilce.firstImg.split('.')));
-      };
+    _.forEach(articleList, function(article, index){
+      if (!!article.firstImg) { // 文章的firstImg图片存在
+        articleList[index] = that.commonFunc.cropperImage(article, that.crooperOptions, that.envImgUrl + article.firstImg);
+      }
     });
     return articleList;
   }

@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { ArticleService } from './article.service';
+import { CommonFunctionService } from './common-function.service';
 import { HttpRequestInterceptor } from '../_interceptor/httpRequestInterceptor.interceptor';
 import { HttpResponseInterceptor } from '../_interceptor/httpResponseInterceptor.interceptor';
 import { LoginService } from './login/login.service';
@@ -33,6 +34,7 @@ import { UserService } from './user.service';
     },
     AuthGuardService,
     AuthService,
+    CommonFunctionService,
     UserService,
     LoginService,
     RegisterService,

@@ -19,13 +19,14 @@ import { environment as env} from '../../environments/environment';
   templateUrl: './creation.component.html',
   styleUrls: ['./creation.component.scss']
 })
-export class CreationComponent implements OnInit, AfterViewInit{
+export class CreationComponent implements OnInit, AfterViewInit {
 
   public editor;
   public article: Article = {
     id: 0,
-    state: 'draft',
+    status: 1, // 0 删除  1 草稿   2 发布
     title: '',
+    allowcomments: 0,
     contentHtml: '',
     contentTxt: '',
     contentSize: 0
@@ -35,7 +36,7 @@ export class CreationComponent implements OnInit, AfterViewInit{
   public warningContent = '';
   public editTitle = '';
   public createArticle = true;
-  public commentFlag = 'yes';
+  public commentFlag = '1';
   public showImageNav = false;
   public articleChangeSubject = new Subject();
 
@@ -63,12 +64,13 @@ export class CreationComponent implements OnInit, AfterViewInit{
           }
           this.editor.txt.html(article.contentHtml);
           this.editTitle = article.title;
+          this.article.title = article.title;
         }
       );
 
     }
-    // 3s后没有事件触发就发送该请求
-    this.articleChangeSubject.debounceTime(3000).subscribe(
+    // 5分钟后没有事件触发就发送该请求
+    this.articleChangeSubject.debounceTime(300000).subscribe(
         val => this.saveArticle()
     );
   }
@@ -96,7 +98,7 @@ export class CreationComponent implements OnInit, AfterViewInit{
       },
       // 服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置,但必须是一个 JSON 格式字符串
       customInsert: function (insertImg, result, editor) {
-        const imgList = result.data || [];
+        const imgList = result.datas || [];
         _.forEach(imgList, function(url){
           insertImg(env.imgUrl + url);
         });
@@ -116,7 +118,7 @@ export class CreationComponent implements OnInit, AfterViewInit{
       if (thisComp.article.id === 0 && thisComp.createArticle) { // create 立即上传
         thisComp.createArticle = false;
         thisComp.saveArticle();
-      }else { //  update延迟3s
+      }else { //  update延迟5分钟
         thisComp.articleChangeSubject.next(thisComp.article);
       }
     };
@@ -140,20 +142,26 @@ export class CreationComponent implements OnInit, AfterViewInit{
       this.articleService.addArticle(this.article).subscribe(
         articleId => {
           this.article.id = articleId;
-          this.location.pushState('', '' , '../edit/article/' + articleId, '');
+          this.location.pushState('', '' , '../edit/article/' + articleId, ''); // 浏览器不跳转， 改变URL值
         },
         err => this.createArticle = true
       );
     }else { // 更新文章
       this.articleService.updateArticle(this.article).subscribe(
-        req => {}
+        req => {
+          if (this.article.status === 2) {
+             this.router.navigate(['/management/article/published']);
+          }
+        }
       );
     }
   }
 
   // 发布文章
   publishArticle() {
-    console.log({'articleId': this.article.id, 'commentFlag': this.commentFlag});
+    this.article.status = 2;
+    this.article.allowcomments = Number(this.commentFlag);
+    this.saveArticle();
     this.showImageNav = false;
   }
 
@@ -173,13 +181,13 @@ export class CreationComponent implements OnInit, AfterViewInit{
     }
    }
 
-  // 绑定标题输入，并3s不改变自动保存
+  // 绑定标题输入，并5分钟不改变自动保存
   bindTitle($event: any) {
     this.article.title = $event.target.innerText;
     if (this.article.id === 0 && this.createArticle) { // create 立即上传
       this.createArticle = false;
       this.saveArticle();
-    }else { //  update延迟3s
+    }else { //  update延迟5分钟
       this.articleChangeSubject.next(this.article);
     }
   }
@@ -187,8 +195,8 @@ export class CreationComponent implements OnInit, AfterViewInit{
   ngAfterViewInit() {
     // 浏览器关闭，刷新时保存数据
     const that = this;
-    this.eleRef.nativeElement.ownerDocument.defaultView.onbeforeunload = function(){
-       that.saveArticle();
+    this.eleRef.nativeElement.ownerDocument.defaultView.onbeforeunload = function(e){
+      return null;
     };
   }
 }
