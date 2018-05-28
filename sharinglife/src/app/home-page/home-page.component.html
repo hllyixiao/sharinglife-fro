@@ -20,7 +20,7 @@
           <div class="item-content">
             <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
               <h2 class="title">
-                <a [routerLink]="['/show', item.articleId]" >{{ item.title }}</a>
+                <a [routerLink]="['/show', item.articleId]" [queryParams]="{status: 2 }"  >{{ item.title }}</a>
               </h2>
               <p class="indentTwo" *ngIf="!!item.firstImg">{{ item.displayContextTxt | omit: 100}}</p>
               <p class="indentTwo" *ngIf="!item.firstImg">{{ item.displayContextTxt | omit: 120}}</p>
@@ -33,10 +33,10 @@
           </div>
           <div class="content-actions">
             <button type="button" class="btn btn-default">
-              <a [routerLink]="['/show', item.articleId]" target="_blank"><i class="fa fa-thumbs-o-up"> {{ item.displayLikes }}</i></a>
+              <a [routerLink]="['/show', item.articleId]" [queryParams]="{status: 2 }" fragment="likes"><i class="fa fa-thumbs-o-up"> {{ item.displayLikes }}</i></a>
             </button>
             <button type="button" class="btn btn-default">
-                <a [routerLink]="['/show', item.articleId]" target="_blank"><i class="fa fa-eye"> {{ item.displayReadVolumes }}</i></a>
+                <a [routerLink]="['/show', item.articleId]" [queryParams]="{status: 2 }"  target="_blank"><i class="fa fa-eye"> {{ item.displayReadVolumes }}</i></a>
             </button>
             <button type="button" class="btn btn-default"><i class="fa fa-comments-o"> {{ item.displayComments }} 条评论</i></button>
             <button type="button" class="btn btn-default"><i class="iconfont icon-share"> 分享</i></button>

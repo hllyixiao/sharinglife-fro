@@ -32,7 +32,7 @@ export class HomePageComponent implements OnInit {
   };
   constructor(
     private articleService: ArticleService,
-    private elef: ElementRef,
+    private eleRef: ElementRef,
     private userService: UserService,
     private commonFunc: CommonFunctionService
   ) { }
@@ -65,9 +65,9 @@ export class HomePageComponent implements OnInit {
     // throttleTime 发出第一个值，忽略等待时间内发出的值，等待时间过后再发出新值
     Observable.fromEvent(window, 'scroll').throttleTime(1500).subscribe(
       event => {
-        const scrollHeight = this.elef.nativeElement.ownerDocument.scrollingElement.scrollHeight;
-        const scrollTop = this.elef.nativeElement.ownerDocument.scrollingElement.scrollTop;
-        const clientHeight = this.elef.nativeElement.ownerDocument.scrollingElement.clientHeight;
+        const scrollHeight = this.eleRef.nativeElement.ownerDocument.scrollingElement.scrollHeight;
+        const scrollTop = this.eleRef.nativeElement.ownerDocument.scrollingElement.scrollTop;
+        const clientHeight = this.eleRef.nativeElement.ownerDocument.scrollingElement.clientHeight;
         const srcollBottom = scrollHeight - clientHeight - scrollTop;
         // 滚动到底部一定距离后，追加几条数据
         if (srcollBottom < 800 && this.articleReqObj.page < this.pages) {

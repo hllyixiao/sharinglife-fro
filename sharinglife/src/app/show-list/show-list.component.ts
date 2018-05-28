@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/co
 import { Router, ActivatedRoute, NavigationEnd, ParamMap } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
-import Cropper from 'cropperjs';
 import 'rxjs/Rx';
 
 import * as _ from 'lodash';
@@ -44,7 +43,7 @@ export class ShowListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private elef: ElementRef,
+    private eleRef: ElementRef,
     private articleService: ArticleService,
     private commonFunc: CommonFunctionService,
     private userService: UserService) {}
@@ -147,9 +146,9 @@ export class ShowListComponent implements OnInit {
     // throttleTime 发出第一个值，忽略等待时间内发出的值，等待时间过后再发出新值
     Observable.fromEvent(window, 'scroll').throttleTime(1500).subscribe(
       event => {
-        const scrollHeight = this.elef.nativeElement.ownerDocument.scrollingElement.scrollHeight;
-        const scrollTop = this.elef.nativeElement.ownerDocument.scrollingElement.scrollTop;
-        const clientHeight = this.elef.nativeElement.ownerDocument.scrollingElement.clientHeight;
+        const scrollHeight = this.eleRef.nativeElement.ownerDocument.scrollingElement.scrollHeight;
+        const scrollTop = this.eleRef.nativeElement.ownerDocument.scrollingElement.scrollTop;
+        const clientHeight = this.eleRef.nativeElement.ownerDocument.scrollingElement.clientHeight;
         const srcollBottom = scrollHeight - clientHeight - scrollTop;
         // 滚动到底部一定距离后，追加几条数据
         if (srcollBottom < 800 && this.articleReqObj.page < this.pages) {

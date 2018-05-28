@@ -20,7 +20,7 @@
             <div class="txt" [ngClass]="{'has-img': !!item.firstImg}">
               <h2 class="title" [ngSwitch]="articleReqObj.status">
                 <a [routerLink]="['/edit/article', item.articleId]" target="_blank" *ngSwitchCase="1">{{ item.title }}</a>
-                <a [routerLink]="['/show', item.articleId]" target="_blank" *ngSwitchCase="2">{{ item.title }}</a>
+                <a [routerLink]="['/show', item.articleId]" [queryParams]='{status: articleReqObj.status}' target="_blank" *ngSwitchCase="2">{{ item.title }}</a>
                 <span *ngSwitchDefault>{{ item.title }}</span>
               </h2>
               <p class="indentTwo" *ngIf="!!item.firstImg">{{ item.displayContextTxt | omit: 100}}</p>

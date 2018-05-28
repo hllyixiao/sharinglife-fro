@@ -27,6 +27,13 @@ export class ArticleService {
   getArticleById(articleId: number): Observable<any> {
     return this.http.get('/sl/api/article/getbyid/' + articleId);
   }
+
+  /**
+  * @根据文章Id 获取已发布的文章
+  */
+  getpublishbyid(articleId: number): Observable<any> {
+    return this.http.get('/sl/api/article/getpublishbyid/' + articleId);
+  }
   /**
   * @根据用户Id, 文章status 获取部分文章
   */
@@ -63,5 +70,19 @@ export class ArticleService {
    */
   updateUser(user): Observable<any> {
     return this.http.post('sl/api/user/update', user);
+  }
+
+   /**
+   * @增加用户对文章点赞
+   */
+  addLike(articleId, articleType): Observable<any> {
+    return this.http.get(`sl/api/like/add?id=${articleId}&type=${articleType}`);
+  }
+
+   /**
+   * @取消用户对于文章的点赞
+   */
+  delLike(articleId, articleType): Observable<any> {
+    return this.http.get(`sl/api/like/delete?id=${articleId}&type=${articleType}`);
   }
 }

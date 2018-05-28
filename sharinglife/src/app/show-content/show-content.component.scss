@@ -13,5 +13,18 @@
       line-height: 1.3;
       font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
     }
+    .article-likes {
+      
+      height: 40px;
+      font-size: 15px;
+      line-height: 40px;
+      border-radius: 20px;
+      margin: 9px 5px 0 15px;
+      width: 100px;
+      cursor: pointer;
+      color: #fff;
+      background-color: #ea6f5a;
+      text-align: center;
+    }
   }
 }
